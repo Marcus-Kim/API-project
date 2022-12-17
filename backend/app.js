@@ -15,7 +15,7 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(cookieParser());
-app.use(express.json());
+app.use(express.json()); // Parses incoming JSON requests and puts the parsed data in req
 
 // Security Middleware
 if (!isProduction) {
