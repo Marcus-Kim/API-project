@@ -1,4 +1,4 @@
-const { validationResult } = require('express-validator')
+const { validationResult } = require('express-validator') // Giving us access to validationResult and .isEmpty()
 // Slow down; ^^^ Not 100% sure what this does
 
 const handleValidationErrors = (req, res, next) => {  // Simply an error handler specific for validations
