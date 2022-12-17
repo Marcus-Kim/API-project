@@ -39,6 +39,7 @@ const restoreUser = (req, res, next) => {
     try {
       const { id } = jwtPayload.data;
       req.user = await User.scope('currentUser').findByPk(id);
+      // scope is just a preset of options that we are selecting for the sake of security. Cherry-picking what kinds of information we want to see based on what is relevant of the purpose of the specific query
     } catch (e) {
       res.clearCookie('token');
       return next();
