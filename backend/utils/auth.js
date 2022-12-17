@@ -36,7 +36,7 @@ const restoreUser = (req, res, next) => {
       return next();
     }
 
-    try {
+    try { // If we are returning above, when do we enter this try/catch?
       const { id } = jwtPayload.data;
       req.user = await User.scope('currentUser').findByPk(id);
       // scope is just a preset of options that we are selecting for the sake of security. Cherry-picking what kinds of information we want to see based on what is relevant of the purpose of the specific query
