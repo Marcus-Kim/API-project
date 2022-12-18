@@ -48,9 +48,9 @@ router.post(
   '/',
   validateSignup, //* here we are passing in the array of error-handling middleware
   async (req, res) => { // been seeing lots of async
-    const { email, password, username } = req.body; // Taking the user input and storing them into variables
+    const { email, password, username, firstName, lastName } = req.body; // Taking the user input and storing them into variables
     // I think order of email, password, and username matters depending on how req.body is formatted
-    const user = await User.signup({ email, username, password }); // The creation of a new user using the input. Will successfully create a new user if the input data given is valid.
+    const user = await User.signup({ email, username, password, firstName, lastName }); // The creation of a new user using the input. Will successfully create a new user if the input data given is valid.
 
     await setTokenCookie(res, user); // Using the created user's data, set a token cookie (figure out how a token cookie works EXACTLY)
 
