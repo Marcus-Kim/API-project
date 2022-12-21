@@ -50,6 +50,31 @@ router.post(
   async (req, res) => { // been seeing lots of async
     const { email, password, username, firstName, lastName } = req.body; // Taking the user input and storing them into variables
     // I think order of email, password, and username matters depending on how req.body is formatted
+
+    // add the error handler for if email exists
+    if (await User.findOne({ where: { email: email } })) {
+      res.status(403)
+      res.json({
+        message: "User already exists",
+        statusCode: 403,
+        errors: {
+          email: "User with that email already exists"
+        }
+      })
+    }
+
+    // add the error handler for if username already exists
+    if (await User.findOne({ where: { username: username } })) {
+      res.status(403)
+      res.json({
+        message: "User already exists",
+        statusCode: 403,
+        errors: {
+          username: "User with that username already exists"
+        }
+      })
+    }
+
     const user = await User.signup({ email, username, password, firstName, lastName }); // The creation of a new user using the input. Will successfully create a new user if the input data given is valid.
 
     await setTokenCookie(res, user); // Using the created user's data, set a token cookie (figure out how a token cookie works EXACTLY)
