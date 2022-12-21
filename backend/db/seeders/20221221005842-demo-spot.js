@@ -21,6 +21,7 @@ module.exports = {
 
     let data = [
       {
+        id: 1,
         ownerId: 1,
         address: '1 W. First Spot Way',
         city: 'City1',
@@ -33,6 +34,7 @@ module.exports = {
         price: 1.11
       },
       {
+        id: 2,
         ownerId: 2,
         address: '2 W. Second Spot Way',
         city: 'City2',
@@ -45,6 +47,7 @@ module.exports = {
         price: 2.22
       },
       {
+        id: 3,
         ownerId: 3,
         address: '3 W. Third Spot Way',
         city: 'City3',
@@ -57,9 +60,7 @@ module.exports = {
         price: 3.33
       },
     ];
-    console.log('Here');
     await queryInterface.bulkInsert(options, data)
-    console.log('Here 2')
   },
 
   async down (queryInterface, Sequelize) {

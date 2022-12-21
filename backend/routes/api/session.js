@@ -56,7 +56,7 @@ router.delete(
 router.get('/', restoreUser, (req, res) => {
 // restoreUser is middleware we made in auth.js.
 // auth.js is becoming more and more prominent now, should go back and review what those do
-  const { user } = req; // Need clarification on how we are pulling from req (destructure?)
+  const { user } = req;
   if (user) { // If the user exists
     return res.json({
       user: user.toSafeObject() // ?? I don't know what toSafeObject does. Go back and walkthrough
