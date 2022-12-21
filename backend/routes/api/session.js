@@ -28,11 +28,16 @@ router.post( // The route is /api/session/
     const user = await User.login({ credential, password });
 
     if (!user) {
-      const err = new Error('Login failed');
-      err.status = 401;
-      err.title = 'Login failed';
-      err.errors = ['The provided credentials were invalid.'];
-      return next(err);
+      // const err = new Error('Login failed');
+      // err.status = 401;
+      // err.title = 'Login failed';
+      // err.errors = ['The provided credentials were invalid.'];
+      // return next(err);
+      res.status(401);
+      return res.json({
+        message: "Invalid credentials",
+        statusCode: 401
+      })
     }
 
     await setTokenCookie(res, user);
@@ -59,7 +64,13 @@ router.get('/', restoreUser, (req, res) => {
   const { user } = req;
   if (user) { // If the user exists
     return res.json({
-      user: user.toSafeObject() // ?? I don't know what toSafeObject does. Go back and walkthrough
+      user: {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        username: user.username
+      }//.toSafeObject() // ?? I don't know what toSafeObject does. Go back and walkthrough
     });
   } else {
     return res.json({ user: null });
