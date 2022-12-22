@@ -1,5 +1,5 @@
 'use strict';
-const { Model, Validator } = require('sequelize');
+const { Model,  Validator} = require('sequelize');
 const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -49,8 +49,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Spot)
-      User.hasMany(models.Booking)
+      User.hasMany(models.Spot, {
+        foreignKey: "ownerId"
+      }) // when I delete this it works??
+      User.hasMany(models.Booking, {
+        foreignKey: "userId"
+      })
+      User.hasMany(models.Review, {
+        foreignKey: "userId"
+      })
+      // TODO add hasMany reviews
     }
   }
   User.init({
