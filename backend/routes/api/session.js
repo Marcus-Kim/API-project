@@ -69,7 +69,7 @@ router.get('/', restoreUser, (req, res) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        username: user.username
+        token: ""
       }//.toSafeObject() // ?? I don't know what toSafeObject does. Go back and walkthrough
     });
   } else {
