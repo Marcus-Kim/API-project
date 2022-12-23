@@ -300,4 +300,44 @@ router.put('/:spotId', [requireAuth, validateSpots], async (req, res, next) => {
 
 })
 
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+  const id = req.params.spotId;
+
+  const spot = await Spot.findOne({
+    where: {
+      id: id
+    }
+  })
+
+  if (!spot) {
+    res.status(404);
+    res.json({
+      message: "Spot couldn't be found",
+      statusCode: res.statusCode
+    })
+  }
+  console.log(spot);
+  console.log("SPOT-OWNER_ID: ", spot.ownerId);
+  console.log("CURRENT USER ID: ", req.user.id);
+
+
+  if (spot.ownerId !== req.user.id) { // Checking if the current user is the owner of that spot (maybe make a middleware to handle this)
+    res.status(403);
+    return res.json({
+      message: "Forbidden",
+      statusCode: res.statusCode
+    })
+  }
+
+  // Left off at deleting a spot, problem is that you should check onDelete: cascade for all models/migration??
+  await spot.destroy({
+    cascade: true
+  });
+
+  return res.json({
+    message: "Successfully deleted",
+    statusCode: res.statusCode
+  })
+})
+
 module.exports = router;

@@ -21,11 +21,12 @@ module.exports = {
         references: {
           model: 'Spots',
           key: 'id'
-        }
+        },
+        onDelete: 'cascade'
       },
       url: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false 
       },
       preview: {
         type: Sequelize.BOOLEAN,
