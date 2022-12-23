@@ -51,14 +51,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.Spot, {
         foreignKey: "ownerId"
-      }) // when I delete this it works??
+      })
       User.hasMany(models.Booking, {
         foreignKey: "userId"
       })
       User.hasMany(models.Review, {
         foreignKey: "userId"
       })
-      // TODO add hasMany reviews
     }
   }
   User.init({
