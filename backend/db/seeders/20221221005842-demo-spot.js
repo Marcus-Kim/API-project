@@ -18,8 +18,7 @@ module.exports = {
      * }], {});
     */
     options.tableName = 'Spots'
-
-    let data = [
+    await queryInterface.bulkInsert(options, [
       {
         id: 1,
         ownerId: 1,
@@ -59,8 +58,7 @@ module.exports = {
         description: 'this is spot number 3',
         price: 3.33
       },
-    ];
-    await queryInterface.bulkInsert(options, data)
+    ])
   },
 
   async down (queryInterface, Sequelize) {
