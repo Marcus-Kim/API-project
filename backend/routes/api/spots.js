@@ -31,6 +31,9 @@ router.get('/', async (req, res, next) => {
         attributes: []
       }
     ],
+    order: [
+      ['id', 'ASC']
+    ],
     attributes: [
       "id",
       "ownerId",
@@ -72,6 +75,9 @@ router.get('/current', requireAuth, async (req, res, next) => {
         model: SpotImage,
         attributes: []
       }
+    ],
+    order: [
+      ['id', 'ASC']
     ],
     attributes: [
       "id",
