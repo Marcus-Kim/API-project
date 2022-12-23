@@ -144,6 +144,7 @@ router.get('/:spotId', async (req, res, next) => {
       "updatedAt",
       [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
     ],
+    group: ["Spot.id"]
   });
 
   if (spot.id == null) {
@@ -335,7 +336,6 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     })
   }
 
-  // Left off at deleting a spot, problem is that you should check onDelete: cascade for all models/migration??
   await spot.destroy({
     cascade: true
   });
