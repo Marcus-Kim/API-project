@@ -48,7 +48,7 @@ router.get('/', async (req, res, next) => {
       "price",
       "createdAt",
       "updatedAt",
-      [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
+      [sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("Reviews.stars")), 2), "avgRating"],
       [sequelize.col("SpotImages.url"), "previewImage"]
     ],
     group: ['Spot.id', 'SpotImages.url']
