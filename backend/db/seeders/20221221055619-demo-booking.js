@@ -24,22 +24,22 @@ module.exports = {
         id: 1,
         spotId: 1,
         userId: 1,
-        startDate: '2022-01-30',
-        endDate: '2022-01-31'
+        startDate: new Date('2022-01-30'),
+        endDate: new Date('2022-01-31')
       },
       {
         id: 2,
         spotId: 2,
         userId: 2,
-        startDate: '2022-02-10',
-        endDate: '2022-02-15'
+        startDate: new Date('2022-02-10'),
+        endDate: new Date('2022-02-15')
       },
       {
         id: 3,
         spotId: 3,
         userId: 3,
-        startDate: '2022-03-30',
-        endDate: '2022-03-31'
+        startDate: new Date('2022-03-30'),
+        endDate: new Date('2022-03-31')
       },
     ])
   },
