@@ -347,11 +347,11 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 })
 
 //TODO Get all Bookings for a Spot based on the Spot's id
-router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
-  const spotId = req.params.spotId;
+// router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+//   const spotId = req.params.spotId;
 
-  const bookings = await 
-})
+//   const bookings = await
+// })
 
 
 
