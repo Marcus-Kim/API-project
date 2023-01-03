@@ -80,7 +80,12 @@ router.post(
     await setTokenCookie(res, user); // Using the created user's data, set a token cookie (figure out how a token cookie works EXACTLY)
 
     return res.json({ // Custom response object
-      user: user
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      username: user.username,
+      token: ""
     });
   }
 );
