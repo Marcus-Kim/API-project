@@ -42,8 +42,12 @@ router.post( // The route is /api/session/
 
     await setTokenCookie(res, user);
 
-    return res.json({
-      user: user
+    return res.json({ // Custom response object
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      username: user.username
     });
   }
 );
