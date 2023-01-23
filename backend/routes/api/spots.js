@@ -28,6 +28,7 @@ router.get('/', async (req, res, next) => {
       },
       {
         model: SpotImage,
+        as: 'SpotImages',
         attributes: []
       }
     ],
@@ -73,6 +74,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
       },
       {
         model: SpotImage,
+        as: 'SpotImages',
         attributes: []
       }
     ],
