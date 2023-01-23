@@ -54,9 +54,9 @@ router.post(
     // add the error handler for if email exists
     if (await User.findOne({ where: { email: email } })) {
       res.status(403)
-      res.json({
+      return res.json({
         message: "User already exists",
-        statusCode: 403,
+        statusCode: res.statusCode,
         errors: {
           email: "User with that email already exists"
         }
@@ -66,7 +66,7 @@ router.post(
     // add the error handler for if username already exists
     if (await User.findOne({ where: { username: username } })) {
       res.status(403)
-      res.json({
+      return res.json({
         message: "User already exists",
         statusCode: 403,
         errors: {
