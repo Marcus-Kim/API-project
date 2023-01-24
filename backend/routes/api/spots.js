@@ -107,47 +107,15 @@ router.get('/current', requireAuth, async (req, res, next) => {
 //TODO Get details of a Spot from an id
 router.get('/:spotId', async (req, res, next) => {
   const id = req.params.spotId;
-
-  const spot = await Spot.findOne({
+  const spot = await Spot.findByPk(id)
+  const numReviews = await Review.count({
     where: {
-      id: id
-    },
-    include: [
-      {
-        model: Review,
-        attributes: []
-      },
-      {
-        model: SpotImage,
-        as: "SpotImages",
-        attributes: ['id', 'url', 'preview']
-      },
-      {
-        model: User,
-        as: "Owner",
-        attributes: ['id', 'firstName', 'lastName']
-      },
-    ],
-    attributes: [
-      "id",
-      "ownerId",
-      "address",
-      "city",
-      "state",
-      "country",
-      "lat",
-      "lng",
-      "name",
-      "description",
-      "price",
-      "createdAt",
-      "updatedAt",
-      [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
-    ],
-    group: ["Spot.id", "SpotImages.id"]
-  });
+      spotId: id
+    }
+  })
 
-  if (spot.id == null) {
+  // If there is no spot with specified id
+  if (!spot) {
     res.status(404);
     return res.json({
       message: "Spot couldn't be found",
@@ -155,15 +123,53 @@ router.get('/:spotId', async (req, res, next) => {
     })
   }
 
-  const jsonSpot = spot.toJSON();
-
-  jsonSpot.numReviews = await Review.count({
+  const allReviews = await Review.findAll({
     where: {
       spotId: id
     }
   })
 
-  res.json(jsonSpot);
+  let starSum = 0; // Sum of stars
+
+  for (let review of allReviews) {
+    starSum += review.stars
+  }
+
+  let averageStarRating = starSum / numReviews
+
+  // Spot images
+  const spotImages = await SpotImage.findAll({
+    where: {
+      spotId: id
+    },
+    attributes: ['id', 'url', 'preview']
+  })
+
+  // Owner
+  const owner = await User.findByPk(spot.ownerId, {
+    attributes: ['id', 'firstName', 'lastName']
+  })
+
+
+  return res.json({
+    id: spot.id,
+    ownerId: spot.ownerId,
+    address: spot.address,
+    city: spot.city,
+    state: spot.state,
+    country: spot.country,
+    lat: spot.lat,
+    lng: spot.lng,
+    name: spot.name,
+    description: spot.description,
+    price: spot.price,
+    createdAt: spot.createdAt,
+    updatedAt: spot.updatedAt,
+    numReviews: numReviews,
+    avgStarRating: averageStarRating,
+    spotImages: spotImages,
+    owner: owner
+  })
 })
 
 const validateSpots = [
