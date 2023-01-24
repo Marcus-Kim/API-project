@@ -11,8 +11,6 @@ TODO 4. Export the router
 const express = require('express'); // (1)
 const { check } = require('express-validator');
 const { Spot, Review, SpotImage, User, Booking, sequelize } = require('../../db/models')
-const db = require('../../db/models');
-const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router(); // (2)
@@ -122,8 +120,7 @@ router.get('/:spotId', async (req, res, next) => {
       {
         model: SpotImage,
         as: "SpotImages",
-        attributes: ['id', 'url', 'preview'],
-        through: { attributes: [] }
+        attributes: ['id', 'url', 'preview']
       },
       {
         model: User,
