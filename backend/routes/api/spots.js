@@ -329,15 +329,19 @@ router.put('/:spotId', [requireAuth, validateSpots], async (req, res, next) => {
   const { address, city, state, country, lat, lng, name, description, price } = req.body
 
   if (spot) {
-    spot.address = address;
-    spot.city = city;
-    spot.state = state;
-    spot.country = country;
-    spot.lat = lat;
-    spot.lng = lng;
-    spot.name = name;
-    spot.description = description;
-    spot.price = price;
+    spot.set({
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    }
+    )
+    await spot.save()
 
     return res.json(spot);
   }
