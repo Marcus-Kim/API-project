@@ -61,46 +61,69 @@ router.get('/', async (req, res, next) => {
 // Get all Spots owned by the Current User
 router.get('/current', requireAuth, async (req, res, next) => {
   const id = req.user.id;
+  // const userSpots = await Spot.findAll({
+  //   where: {
+  //     ownerId: id
+  //   },
+  //   include: [
+  //     {
+  //       model: Review,
+  //       attributes: []
+  //     },
+  //     {
+  //       model: SpotImage,
+  //       as: 'SpotImages',
+  //       attributes: []
+  //     }
+  //   ],
+  //   order: [
+  //     ['id', 'ASC']
+  //   ],
+  //   attributes: [
+  //     "id",
+  //     "ownerId",
+  //     "address",
+  //     "city",
+  //     "state",
+  //     "country",
+  //     "lat",
+  //     "lng",
+  //     "name",
+  //     "description",
+  //     "price",
+  //     "createdAt",
+  //     "updatedAt",
+  //     [sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("Reviews.stars")), 2), "avgRating"],
+  //     [sequelize.col("SpotImages.url"), "previewImage"]
+  //   ],
+  //   group: ['Spot.id', 'Reviews.stars', 'SpotImages.url']
+  // });
+
   const userSpots = await Spot.findAll({
     where: {
       ownerId: id
     },
-    include: [
-      {
-        model: Review,
-        attributes: []
-      },
-      {
-        model: SpotImage,
-        as: 'SpotImages',
-        attributes: []
-      }
-    ],
-    order: [
-      ['id', 'ASC']
-    ],
-    attributes: [
-      "id",
-      "ownerId",
-      "address",
-      "city",
-      "state",
-      "country",
-      "lat",
-      "lng",
-      "name",
-      "description",
-      "price",
-      "createdAt",
-      "updatedAt",
-      [sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("Reviews.stars")), 2), "avgRating"],
-      [sequelize.col("SpotImages.url"), "previewImage"]
-    ],
-    group: ['Spot.id', 'Reviews.stars', 'SpotImages.url']
-  });
+    order: [['id', 'ASC']]
+  })
 
-  res.json({
-    Spots: userSpots
+  // Add the average rating to each spot
+    // Loop over each spot in the array
+      // for each spot, get the sum of all the ratings and the number of ratings
+      // Add the property to the spot (turn into a pojo)
+  let payload = [];
+  for (let spot of userSpots) {
+    const numberOfRatings = await Review.count({ where: { spotId: spot.id }})//?-----NUMBER OF REVIEWS
+    const sumOfRatings = await Review.sum('stars', {where: { spotId: spot.id }})//?--TOTAL STARS FROM ALL RELEVANT REVIEWS
+    const avgRating = sumOfRatings/numberOfRatings//?--------------------------------FORMULA FOR AVERAGE
+    const previewImage = await SpotImage.findOne({where: {spotId: spot.id}})//?      SPOT IMAGE
+    let pojoSpot = spot.toJSON()//?--------------------------------------------------TURN THE SPOT INTO A POJO
+    pojoSpot.avgRating = avgRating;//?                                               ADD THE RATING ONTO THE POJO
+    pojoSpot.previewImage = previewImage.url;//?-------------------------------------ADD THE IMAGE URL ONTO POJO
+    payload.push(pojoSpot);//?-------------------------------------------------------ADD THE NEWLY FORMATTED POJO INTO PAYLOAD
+  }
+
+  res.json({//?----------------------------------------------------------------------YOU CAN FORMAT THE RESPONSE HOWEVER YOU WANT LIKE THIS
+    Spots: payload
   });
 })
 

@@ -13,7 +13,8 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        unique: true
       },
       spotId: {
         type: Sequelize.INTEGER,
@@ -26,7 +27,7 @@ module.exports = {
       },
       url: {
         type: Sequelize.STRING,
-        allowNull: false 
+        allowNull: false
       },
       preview: {
         type: Sequelize.BOOLEAN,
