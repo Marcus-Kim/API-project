@@ -117,8 +117,16 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const avgRating = sumOfRatings/numberOfRatings//?--------------------------------FORMULA FOR AVERAGE
     const previewImage = await SpotImage.findOne({where: {spotId: spot.id}})//?      SPOT IMAGE
     let pojoSpot = spot.toJSON()//?--------------------------------------------------TURN THE SPOT INTO A POJO
-    pojoSpot.avgRating = avgRating;//?                                               ADD THE RATING ONTO THE POJO
-    pojoSpot.previewImage = previewImage.url;//?-------------------------------------ADD THE IMAGE URL ONTO POJO
+    if (numberOfRatings > 0) {
+      pojoSpot.avgRating = avgRating;//?                                               ADD THE RATING ONTO THE POJO
+    } else {
+      pojoSpot.avgRating = "No ratings yet"
+    }
+    if (previewImage) {
+      pojoSpot.previewImage = previewImage.url;//?-------------------------------------ADD THE IMAGE URL ONTO POJO
+    } else {
+      pojoSpot.previewImage = "No preview images available"
+    }
     payload.push(pojoSpot);//?-------------------------------------------------------ADD THE NEWLY FORMATTED POJO INTO PAYLOAD
   }
 
