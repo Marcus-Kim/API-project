@@ -13,49 +13,100 @@ const { check } = require('express-validator');
 const { Spot, Review, SpotImage, User, Booking, sequelize, ReviewImage } = require('../../db/models')
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
+const { Op } = require("sequelize")
 const router = express.Router(); // (2)
 
 // Get all Spots
 router.get('/', async (req, res, next) => {
 
+  let errorResult = {
+    message: "Validation Error",
+    statusCode: 400,
+    errors: {}
+  }
+
+  let {
+    page,
+    size,
+    minLat,
+    minLng,
+    maxLat,
+    maxLng,
+    minPrice,
+    maxPrice
+  } = req.query;
+
+  if (!page || page > 10) page = 1;
+  if (!size || size > 20) size = 20;
+
+  page = +page;
+  size = +size;
+  minLat= +minLat;
+  minLng= +minLng;
+  maxLat= +maxLat;
+  maxLng= +maxLng;
+  minPrice= +minPrice;
+  maxPrice= +maxPrice;
+
+  const pagination = {};
+
+  const where = {}
+  if (page < 1) errorResult.errors.page = "Page must be greater than or equal to 1"
+  if (size < 1) errorResult.errors.size = "Size must be greater than or equal to 1"
+  if (Number.isInteger(minLat) === true) errorResult.errors.minLat = "Minimum latitude is invalid"
+  if (Number.isInteger(maxLat) === true) errorResult.errors.maxLat = "Maximum latitude is invalid"
+  if (Number.isInteger(minLng) === true) errorResult.errors.minLng = "Minimum longitude is invalid"
+  if (Number.isInteger(maxLng) === true) errorResult.errors.maxLng = "Maximum longitude is invalid"
+  if (minPrice < 0) errorResult.errors.minPrice = "Minimum price must be greater than or equal to 0"
+  if (maxPrice < 0) errorResult.errors.maxPrice = "Maximum price must be greater than or equal to 0"
+  if (Number.isInteger(minPrice) === true) errorResult.errors.minPriceType = "Minimum price must be a decimal"
+  if (Number.isInteger(maxPrice) === true) errorResult.errors.maxPriceType = "Maximum price must be a decimal"
+
+
+  if (Number.isInteger(page) && Number.isInteger(size)) {
+    pagination.limit = size;
+    pagination.offset = size * (page - 1);
+  }
+
+
+  // HANDLING ALL VALIDATION ERRORS
+  if (errorResult.errors) {
+    res.status(400)
+    return res.json(errorResult)
+  }
+
   const spots = await Spot.findAll({
-    include: [
-      {
-        model: Review,
-        attributes: []
-      },
-      {
-        model: SpotImage,
-        as: 'SpotImages',
-        attributes: []
-      }
-    ],
-    order: [
-      ['id', 'ASC']
-    ],
-    attributes: [
-      "id",
-      "ownerId",
-      "address",
-      "city",
-      "state",
-      "country",
-      "lat",
-      "lng",
-      "name",
-      "description",
-      "price",
-      "createdAt",
-      "updatedAt",
-      [sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("Reviews.stars")), 2), "avgRating"],
-      [sequelize.col("SpotImages.url"), "previewImage"]
-    ],
-    group: ['Spot.id', 'SpotImages.url']
+    order: [['id', 'ASC']],
+    ...pagination
   })
 
+  // Add the average rating to each spot
+    // Loop over each spot in the array
+      // for each spot, get the sum of all the ratings and the number of ratings
+      // Add the property to the spot (turn into a pojo)
+  let payload = [];
+  for (let spot of spots) {
+    const numberOfRatings = await Review.count({ where: { spotId: spot.id }})
+    const sumOfRatings = await Review.sum('stars', {where: { spotId: spot.id }})
+    const avgRating = sumOfRatings/numberOfRatings
+    const previewImage = await SpotImage.findOne({where: {spotId: spot.id}})
+    let pojoSpot = spot.toJSON()
+    if (numberOfRatings > 0) {
+      pojoSpot.avgRating = avgRating;
+    } else {
+      pojoSpot.avgRating = "No ratings yet"
+    }
+    if (previewImage) {
+      pojoSpot.previewImage = previewImage.url;
+    } else {
+      pojoSpot.previewImage = "No preview images available"
+    }
+    payload.push(pojoSpot);
+  }
+
   res.json({
-    Spots: spots
-  })
+    Spots: payload
+  });
 })
 
 // Get all Spots owned by the Current User
