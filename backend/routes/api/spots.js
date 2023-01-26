@@ -10,7 +10,7 @@ TODO 4. Export the router
 
 const express = require('express'); // (1)
 const { check } = require('express-validator');
-const { Spot, Review, SpotImage, User, Booking, sequelize } = require('../../db/models')
+const { Spot, Review, SpotImage, User, Booking, sequelize, ReviewImage } = require('../../db/models')
 const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router(); // (2)
@@ -549,6 +549,132 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     updatedAt: booking.updatedAt
   })
 })
+
+//TODO Get all reviews by a Spot's id
+router.get('/:spotId/reviews', async (req, res, next) => {
+  const spotId = req.params.spotId;
+
+  const spot = await Spot.findByPk(spotId);
+
+  if (!spot) {
+    res.status(404);
+    res.json({
+      message: "Spot couldn't be found",
+      statusCode: res.statusCode
+    })
+  }
+
+  const reviews = await Review.findAll({
+    where: {
+      spotId: spotId
+    },
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'firstName', 'lastName']
+      },
+      {
+        model: ReviewImage,
+        attributes: ['id', 'url']
+      }
+    ]
+  })
+
+  res.json(reviews)
+})
+
+// const validateSpots = [
+//   check('city')
+//     .notEmpty()
+//     .withMessage("City is required"),
+//   check('address')
+//     .notEmpty({ checkFalsy: true })
+//     .withMessage("address should not be empty"),
+//   check('state')
+//     .notEmpty()
+//     .withMessage("State is required"),
+//   check('country')
+//     .notEmpty()
+//     .withMessage("Country is required"),
+//   check('lat')
+//     .notEmpty()
+//     .isNumeric()
+//     .withMessage("Latitude is not valid"),
+//   check('lng')
+//     .notEmpty()
+//     .isNumeric()
+//     .withMessage("Longitude is not valid"),
+//   check('name')
+//     .notEmpty()
+//     .isLength({ max: 50 })
+//     .withMessage("Name must be less than 50 characters"),
+//   check('description')
+//     .notEmpty()
+//     .withMessage("Description is required"),
+//   check('price')
+//     .notEmpty()
+//     .withMessage("Price per day is required"),
+
+//   handleValidationErrors,
+// ]
+
+const validateReviews = [
+  check('review')
+    .notEmpty({checkFalsy: true})
+    .withMessage("Review text is required"),
+  check('stars')
+    .notEmpty({checkFalsy: true})
+    .isFloat({min: 1, max: 5})
+    .withMessage("Stars must be an integer from 1 to 5"),
+  handleValidationErrors
+]
+
+//TODO Create a Review for a Spot based on the Spot's id
+router.post('/:spotId/reviews', requireAuth, validateReviews, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const spot = await Spot.findByPk(spotId);
+  const spotReviews = await Review.findAll({
+    where: {
+      spotId: spotId
+    }
+  })
+
+  // Loop over the array of spot reviews
+  for (let review of spotReviews) {
+    // pull the userId from each review
+    const userId = review.userId;
+    if (userId === req.user.id) {
+      res.status(403);
+      return res.json({
+        "message": "User already has a review for this spot",
+        "statusCode": 403
+      })
+    }
+  }
+
+  if (!spot) {
+    res.status(404);
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: res.statusCode
+    })
+  }
+
+  const { review, stars } = req.body;
+  const newReview = await Review.create({
+    review: review,
+    stars: stars,
+    spotId: spotId,
+    userId: req.user.id
+  })
+
+  return res.json({
+    Review: newReview
+  })
+})
+
+
+
 
 
 module.exports = router;
