@@ -173,12 +173,6 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
       id: bookingId
     }
   })
-  const spotId = booking.spotId
-  const spot = await Spot.findOne({
-    where: {
-      id: spotId
-    }
-  })
 
   // Couldn't find a Booking with the specified id
   if (!booking) {
@@ -188,6 +182,13 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
       statusCode: res.statusCode
     })
   }
+
+  const spotId = booking.spotId
+  const spot = await Spot.findOne({
+    where: {
+      id: spotId
+    }
+  })
 
   // Bookings that have been started can't be deleted
   const now = new Date();
@@ -208,6 +209,12 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     res.status(200)
     res.json({
       message: "Successfully deleted",
+      statusCode: res.statusCode
+    })
+  } else {
+    res.status(403);
+    res.json({
+      message: "You must be the owner of the spot or booking",
       statusCode: res.statusCode
     })
   }
