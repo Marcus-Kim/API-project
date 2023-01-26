@@ -406,7 +406,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
   }
 
   // if you are NOT the owner of the spot
-  if (parseInt(spotId) !== userId) {
+  if (spot.ownerId !== userId) {
     const booking = await Booking.findAll({
       where: {
         spotId: spotId
@@ -417,8 +417,8 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
       Bookings: booking
     });
   }
-
-  if (parseInt(spotId) === userId) {
+  // if you ARE the owner of the spot
+  if (spot.ownerId === userId) {
     const booking = await Booking.findAll({
       where: {
         spotId: spotId
@@ -471,15 +471,15 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
   const allBookings = await Booking.findAll({ where: { spotId: spotId }});
 
   allBookings.forEach(booking => {
-    const startDateString = booking.startDate.toDateString();
-    const startDateStringDate = new Date(startDateString);
-    const startDateTime = startDateStringDate.getTime();
-    const endDateString = booking.endDate.toDateString();
+    const startDateString = booking.startDate.toDateString(); // This is turning the startDate of current booking to check into a string
+    const startDateStringDate = new Date(startDateString); // This is turning ^ into a new date
+    const startDateTime = startDateStringDate.getTime(); // This is getting the measurable time from the new start date
+    const endDateString = booking.endDate.toDateString(); // This is doing the same thing with endDate
     const endDateStringDate = new Date(endDateString);
-    const endDateTime = endDateStringDate.getTime();
-
+    const endDateTime = endDateStringDate.getTime(); // Comparable time
+    console.log(booking.startDate)
     // if the startDate is equal to an existing startDate
-    if (startDateObject.getTime() === startDateTime) {
+    if (startDateObject.getTime() === startDateTime) { // StartDateObject is the measurable time of the booking we are trying to create --- startDateTime is current comparison from list of bookings
       res.status(403)
       res.json({
         message: "Sorry, this spot is already booked for the specified dates",
@@ -539,7 +539,15 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     endDate: endDate
   })
 
-  res.json(booking)
+  res.json({
+    id: booking.id,
+    spotId: spotId,
+    userId: req.user.id,
+    startDate: startDate,
+    endDate: endDate,
+    createdAt: booking.createdAt,
+    updatedAt: booking.updatedAt
+  })
 })
 
 
