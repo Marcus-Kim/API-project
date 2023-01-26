@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
   let errorResult = {
     message: "Validation Error",
     statusCode: 400,
-    errors: {}
+    errors: []
   }
 
   let {
@@ -51,17 +51,24 @@ router.get('/', async (req, res, next) => {
   const pagination = {};
 
   const where = {}
-  if (page < 1) errorResult.errors.page = "Page must be greater than or equal to 1"
-  if (size < 1) errorResult.errors.size = "Size must be greater than or equal to 1"
-  if (Number.isInteger(minLat) === true) errorResult.errors.minLat = "Minimum latitude is invalid"
-  if (Number.isInteger(maxLat) === true) errorResult.errors.maxLat = "Maximum latitude is invalid"
-  if (Number.isInteger(minLng) === true) errorResult.errors.minLng = "Minimum longitude is invalid"
-  if (Number.isInteger(maxLng) === true) errorResult.errors.maxLng = "Maximum longitude is invalid"
-  if (minPrice < 0) errorResult.errors.minPrice = "Minimum price must be greater than or equal to 0"
-  if (maxPrice < 0) errorResult.errors.maxPrice = "Maximum price must be greater than or equal to 0"
-  if (Number.isInteger(minPrice) === true) errorResult.errors.minPriceType = "Minimum price must be a decimal"
-  if (Number.isInteger(maxPrice) === true) errorResult.errors.maxPriceType = "Maximum price must be a decimal"
 
+  if (page < 1) errorResult.errors.push("Page must be greater than or equal to 1")
+  if (size < 1) errorResult.errors.push("Size must be greater than or equal to 1")
+  if (Number.isInteger(minLat) === true) errorResult.errors.push("Minimum latitude is invalid")
+  if (Number.isInteger(maxLat) === true) errorResult.errors.push("Maximum latitude is invalid")
+  if (Number.isInteger(minLng) === true) errorResult.errors.push("Minimum longitude is invalid")
+  if (Number.isInteger(maxLng) === true) errorResult.errors.push("Maximum longitude is invalid")
+  if (minPrice < 0) errorResult.errors.push("Minimum price must be greater than or equal to 0")
+  if (maxPrice < 0) errorResult.errors.push("Maximum price must be greater than or equal to 0")
+  if (Number.isInteger(minPrice) === true) errorResult.errors.push("Minimum price must be a decimal")
+  if (Number.isInteger(maxPrice) === true) errorResult.errors.push("Maximum price must be a decimal")
+
+  if (minLat) where.lat = { [Op.gte] : minLat } // minLat
+  if (maxLat) where.lat = { [Op.lte] : maxLat } // maxLat
+  if (minLng) where.lng = { [Op.gte] : minLng } // minLng
+  if (maxLng) where.lng = { [Op.lte] : maxLng } // maxLng
+  if (minPrice) where.price = { [Op.gte] : minPrice } // minPrice
+  if (maxPrice) where.price = { [Op.lte] : maxPrice } // maxPrice
 
   if (Number.isInteger(page) && Number.isInteger(size)) {
     pagination.limit = size;
@@ -69,14 +76,15 @@ router.get('/', async (req, res, next) => {
   }
 
 
-  // HANDLING ALL VALIDATION ERRORS
-  if (errorResult.errors) {
+  // HANDLING ALL VALIDATION ERRORS.push(if (errorResult.errors) {
+  if (errorResult.errors.length) {
     res.status(400)
-    return res.json(errorResult)
+    return res.json(errorResult);
   }
 
   const spots = await Spot.findAll({
     order: [['id', 'ASC']],
+    where,
     ...pagination
   })
 
