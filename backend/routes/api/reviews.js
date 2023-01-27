@@ -6,7 +6,7 @@ const { requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
-// Get all reviews of the current user
+//TODO Get all reviews of the current user
 router.get('/current', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
 
@@ -43,7 +43,9 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const jsonReview = review.toJSON();
     const jsonSpot = spot.toJSON();
 
-    jsonSpot.previewImage = spotImage.url;
+    if (spotImage.url) { // If there is a url (or else it gives null error on PG)
+      jsonSpot.previewImage = spotImage.url;
+    }
     jsonReview.Spot = jsonSpot;
     payload.push(jsonReview)
   }
@@ -63,7 +65,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
       reviewId: reviewId
     }
   })
-  
+
   if (!review) { // if the review can't be found
     res.status(403);
     return res.json({

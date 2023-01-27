@@ -9,11 +9,6 @@ const router = express.Router();
 router.delete('/:imageId', requireAuth, async (req, res, next) => {
   const imageId = req.params.imageId;
   const reviewImage = await ReviewImage.findByPk(imageId);
-  const review = await Review.findOne({
-    where: {
-      id: reviewImage.reviewId
-    }
-  })
 
   // If no review image found
   if (!reviewImage) {
@@ -23,6 +18,12 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
       "statusCode": 404
     })
   }
+
+  const review = await Review.findOne({
+    where: {
+      id: reviewImage.reviewId
+    }
+  })
 
   // If image doesn't belong to current user
   if (review.userId !== req.user.id) {
