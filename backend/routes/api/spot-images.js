@@ -9,11 +9,6 @@ const router = express.Router();
 router.delete('/:imageId', requireAuth, async (req, res, next) => {
   const imageId = req.params.imageId;
   const image = await SpotImage.findByPk(imageId);
-  const spot = await Spot.findOne({
-    where: {
-      id: image.spotId
-    }
-  })
 
   if (!image) {
     res.status(404);
@@ -23,14 +18,11 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     })
   }
 
-  // if spot cannot be found
-  // if (!spot) {
-  //   res.status(404);
-  //   return res.json({
-  //     message: "Spot couldn't be found",
-  //     statusCode: res.statusCode
-  //   })
-  // }
+  const spot = await Spot.findOne({
+    where: {
+      id: image.spotId
+    }
+  })
 
   // Spot must belong to current user
   if (spot.ownerId !== req.user.id) {
