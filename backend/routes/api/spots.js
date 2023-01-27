@@ -636,7 +636,9 @@ router.get('/:spotId/reviews', async (req, res, next) => {
     ]
   })
 
-  res.json(reviews)
+  res.json({
+    Reviews: reviews
+  })
 })
 
 // const validateSpots = [
@@ -724,9 +726,7 @@ router.post('/:spotId/reviews', requireAuth, validateReviews, async (req, res, n
     userId: req.user.id
   })
 
-  return res.json({
-    Review: newReview
-  })
+  return res.json(newReview)
 })
 
 
