@@ -380,7 +380,7 @@ router.put('/:spotId', [requireAuth, validateSpots], async (req, res, next) => {
   if (spot.ownerId !== req.user.id) {
     res.status(403);
     return res.json({
-      message: "Forbidden",
+      message: "You must be the owner of the Spot to edit",
       statusCode: res.statusCode
     })
   }
