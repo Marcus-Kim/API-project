@@ -407,6 +407,7 @@ router.put('/:spotId', [requireAuth, validateSpots], async (req, res, next) => {
 
 })
 
+//TODO Delete a Spot
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
   const id = req.params.spotId;
 
@@ -423,15 +424,11 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
       statusCode: res.statusCode
     })
   }
-  console.log(spot);
-  console.log("SPOT-OWNER_ID: ", spot.ownerId);
-  console.log("CURRENT USER ID: ", req.user.id);
-
 
   if (spot.ownerId !== req.user.id) { // Checking if the current user is the owner of that spot (maybe make a middleware to handle this)
     res.status(403);
     return res.json({
-      message: "Forbidden",
+      message: "Must be the owner of the Spot to delete it",
       statusCode: res.statusCode
     })
   }
