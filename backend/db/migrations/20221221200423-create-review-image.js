@@ -22,7 +22,8 @@ module.exports = {
           model: 'Reviews',
           key: 'id'
         },
-        onDelete: 'cascade'
+        onDelete: 'cascade',
+        hooks: true
       },
       url: {
         type: Sequelize.STRING,
