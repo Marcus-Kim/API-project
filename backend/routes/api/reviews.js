@@ -63,6 +63,14 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
       reviewId: reviewId
     }
   })
+  
+  if (!review) { // if the review can't be found
+    res.status(403);
+    return res.json({
+      message: "Review couldn't be found",
+      statusCode: res.statusCode
+    })
+  }
 
   if (review.userId !== req.user.id) { // Must belong to current user
     res.status(403);
@@ -72,13 +80,6 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     })
   }
 
-  if (!review) { // if the review can't be found
-    res.status(403);
-    return res.json({
-      message: "Review couldn't be found",
-      statusCode: res.statusCode
-    })
-  }
 
   // if there are already 10 images
   if (reviewImages.length === 10) {

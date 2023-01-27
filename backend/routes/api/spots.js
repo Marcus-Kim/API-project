@@ -688,7 +688,7 @@ const validateReviews = [
   handleValidationErrors
 ]
 
-//TODO Create a Review for a Spot based on the Spot's id
+//TODO Create a Review for a Spot based on the Spot's id [id must be unique error]
 router.post('/:spotId/reviews', requireAuth, validateReviews, async (req, res, next) => {
   const spotId = req.params.spotId;
   const spot = await Spot.findByPk(spotId);
