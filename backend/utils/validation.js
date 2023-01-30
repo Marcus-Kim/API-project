@@ -9,10 +9,10 @@ const handleValidationErrors = (req, res, next) => {  // Simply an error handler
       .array()                   // <<< learn more about this syntax, could be good for readability
       .map((error) => `${error.msg}`);
 
-    const err = Error('Bad request')
+    const err = Error('Validation Error')
     err.errors = errors; // The only thing hard to see here so far is what `errors` looks like
     err.status = 400;
-    err.title = 'Bad request.';
+    err.title = 'Bad Request';
     next(err);
   }
   next();
