@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 // ACTIONS
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+
 // ACTION CREATORS
 const setUser = (user) => {
   return {
@@ -57,6 +58,15 @@ export const signup = (user) => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(setUser(data.user));
+  return response;
+};
+
+//* LOGOUT THUNK
+export const logout = () => async (dispatch) => {
+  const response = await csrfFetch('/api/session', {
+    method: 'DELETE',
+  });
+  dispatch(removeUser());
   return response;
 };
 
