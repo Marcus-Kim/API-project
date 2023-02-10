@@ -1,0 +1,11 @@
+
+input {
+  width: 100%;
+  padding: 10px;
+}
+
+.form-elements-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%
+}
