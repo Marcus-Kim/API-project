@@ -533,7 +533,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const endDateString = booking.endDate.toDateString(); // This is doing the same thing with endDate
     const endDateStringDate = new Date(endDateString);
     const endDateTime = endDateStringDate.getTime(); // Comparable time
-    console.log(booking.startDate)
     // if the startDate is equal to an existing startDate
     if (startDateObject.getTime() === startDateTime) { // StartDateObject is the measurable time of the booking we are trying to create --- startDateTime is current comparison from list of bookings
       res.status(403)

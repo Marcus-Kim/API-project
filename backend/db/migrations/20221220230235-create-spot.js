@@ -8,7 +8,6 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    console.log('Create Table Spot')
     await queryInterface.createTable('Spots', {
       id: {
         allowNull: false,
