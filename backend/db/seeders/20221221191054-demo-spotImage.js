@@ -23,19 +23,19 @@ module.exports = {
       {
         id: 1,
         spotId: 1,
-        url: 'url1',
+        url: 'https://images.beazer.com/e616c1c0-3536-4c3c-98dd-3a1954b21a2c-c',
         preview: false
       },
       {
         id: 2,
         spotId: 2,
-        url: 'url2',
+        url: 'https://www.mydomaine.com/thmb/dke2LC6lH21Pvqwd2lI6AIutnDY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SuCasaDesign-Modern-9335be77ca0446c7883c5cf8d974e47c.jpg',
         preview: true
       },
       {
         id: 3,
         spotId: 3,
-        url: 'url3',
+        url: 'https://dlqxt4mfnxo6k.cloudfront.net/beracahhomes.com/aHR0cHM6Ly9zMy5hbWF6b25hd3MuY29tL2J1aWxkZXJjbG91ZC9jMTMyOWUzNTRlZDNjNmI1ZjZmMDI5ZmRhMjdhMjc0Yi5qcGVn/2000/2000',
         preview: true
       },
     ])

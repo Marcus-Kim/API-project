@@ -51,7 +51,7 @@ function ProfileButton({ user }) {
     <>
       <button className="profile-button-icons" onClick={openMenu}>
         <div className="button-icon-group">
-          <i class="fa-solid fa-bars"></i>
+          <i className="fa-solid fa-bars"></i>
           <FontAwesomeIcon icon={faUser} />
         </div>
       </button>
