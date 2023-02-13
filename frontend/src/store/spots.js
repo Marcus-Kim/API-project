@@ -24,7 +24,6 @@ export const thunkLoadSpots = () => async dispatch => { //? Since this is not a 
   const response = await fetch('/api/spots');
   if (response.ok) {
     const data = await response.json();
-    console.log('hello')
     dispatch(actionLoadSpots(data))
   }
 }
