@@ -4,6 +4,9 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { login } from "../../store/session";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser, faBarChart } from '@fortawesome/free-regular-svg-icons'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -37,12 +40,20 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
+  const demoLogin = () => {
+    const credientials = { credential: "DemoUser1", password: "password" }
+    dispatch(login(credientials))
+  }
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+      <button className="profile-button-icons" onClick={openMenu}>
+        <div className="button-icon-group">
+          <i class="fa-solid fa-bars"></i>
+          <FontAwesomeIcon icon={faUser} />
+        </div>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
@@ -65,6 +76,10 @@ function ProfileButton({ user }) {
               itemText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
+            />
+            <OpenModalMenuItem
+              itemText="Demo User"
+              onItemClick={demoLogin}
             />
           </>
         )}
