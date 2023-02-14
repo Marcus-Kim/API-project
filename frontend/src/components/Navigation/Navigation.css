@@ -26,6 +26,8 @@
 
 .button-icon-group {
   padding: 10px;
+  display: flex
+
 }
 
 .profile-button {
@@ -38,4 +40,8 @@
   position: absolute;
   top: 65px;
   right: 50px
+}
+
+.create-spot-button {
+  margin-right: 15px;
 }

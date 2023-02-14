@@ -41,7 +41,6 @@ export const thunkSingleSpot = (spotId) => async dispatch => {
 
   if (response.ok) {
     const data = await response.json();
-    console.log(data)
     dispatch(actionSingleSpot(data));
     return data;
   }

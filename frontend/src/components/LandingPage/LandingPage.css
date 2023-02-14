@@ -1,10 +1,36 @@
+.landing-page-container {
+  margin-left: 10%;
+  margin-right: 10%;
+  width: fit-content;
+  position: relative;
+}
+
 .all-spots-wrapper {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-top: 4%;
+  row-gap: 30px;
+  column-gap: 100px;
+  flex-basis: 25%;
 }
 
 .spot-image {
-  width: 500px;
-  height: 300px
+  width: 270px;
+  height: 250px
+}
+
+.spot-card-wrapper {
+  text-decoration: none;
+  color: black
+}
+
+.city-state-rating {
+  display: flex;
+  justify-content: space-between;
+}
+
+.spot-card {
+  border: 1px black solid;
+  padding: 1px;
 }
