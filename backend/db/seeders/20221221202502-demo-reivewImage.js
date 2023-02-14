@@ -21,17 +21,14 @@ module.exports = {
     options.tableName = 'ReviewImages';
     await queryInterface.bulkInsert(options, [
       {
-        id: 1,
         reviewId: 1,
         url: 'reviewImages url1',
       },
       {
-        id: 2,
         reviewId: 2,
         url: 'reviewImages url2',
       },
       {
-        id: 3,
         reviewId: 3,
         url: 'reviewImages url3',
       },
