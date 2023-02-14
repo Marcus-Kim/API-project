@@ -22,7 +22,7 @@ function SpotDetails() {
 
   return (
     <>
-      <div className="container">
+      <div className="spot-details-container">
         <div className="details-wrapper">
           <div className="details-header-wrapper">
             <div className="spot-name">{spot.name}</div>
