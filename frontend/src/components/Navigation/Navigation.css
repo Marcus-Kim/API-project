@@ -6,6 +6,9 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px rgb(190, 42, 42) solid;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  width: 100%;
 }
 
 .logo-button {
@@ -23,9 +26,22 @@
 
 .button-icon-group {
   padding: 10px;
+  display: flex
+
 }
 
 .profile-button {
   display: flex;
   align-items: center;
+}
+
+.profile-dropdown {
+  list-style: none;
+  position: absolute;
+  top: 65px;
+  right: 50px
+}
+
+.create-spot-button {
+  margin-right: 15px;
 }
