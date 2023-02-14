@@ -1,9 +1,41 @@
+.spot-details-container {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 1%;
+}
 
+.spot-name {
+  font-size: x-large;
+  font-weight: bolder;
+  padding-bottom: 12px;
+}
 
-/* .spot-name {
-  font-size: large;
-} */
+.city-state-country {
+  padding-bottom: 1vw;
+}
 
 #half-image {
   height: 412px;
+  width: 50%
+}
+
+.description-price-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.description-wrapper {
+  width: 60%
+}
+
+.description-title {
+  font-size: larger;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.price-button-wrapper {
+  width: 40%;
 }
