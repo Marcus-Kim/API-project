@@ -20,7 +20,6 @@ module.exports = {
     options.tableName = 'Spots'
     await queryInterface.bulkInsert(options, [
       {
-        id: 1,
         ownerId: 1,
         address: '1 W. First Spot Way',
         city: 'Glendale',
@@ -33,7 +32,6 @@ module.exports = {
         price: 259.00
       },
       {
-        id: 2,
         ownerId: 2,
         address: '2 W. Second Spot Way',
         city: 'Canon Beach',
@@ -46,7 +44,6 @@ module.exports = {
         price: 450.00
       },
       {
-        id: 3,
         ownerId: 3,
         address: '3 W. Third Spot Way',
         city: 'Peoria',
@@ -59,7 +56,6 @@ module.exports = {
         price: 89.00
       },
       {
-        id: 4,
         ownerId: 1,
         address: '4 E. Fourth Spot Way',
         city: 'Austin',
@@ -72,7 +68,6 @@ module.exports = {
         price: 333.33
       },
       {
-        id: 5,
         ownerId: 2,
         address: '5 W. Fifth Spot Way',
         city: 'Los Angeles',
@@ -85,7 +80,6 @@ module.exports = {
         price: 90.33
       },
       {
-        id: 6,
         ownerId: 3,
         address: '6 W. Sixth Spot Way',
         city: 'Miami',
@@ -98,7 +92,6 @@ module.exports = {
         price: 700.00
       },
       {
-        id: 7,
         ownerId: 1,
         address: '7 W. Seventh Spot Way',
         city: 'Seattle',
@@ -111,7 +104,6 @@ module.exports = {
         price: 900.00
       },
       {
-        id: 8,
         ownerId: 2,
         address: '8 W. Eigth Spot Way',
         city: 'Denver',
