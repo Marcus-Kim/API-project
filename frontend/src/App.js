@@ -22,11 +22,11 @@ function App() {
           <Route exact path='/'>
             <LandingPage />
           </Route>
-          <Route exact path='/spots/:spotId'>
-            <SpotDetails />
-          </Route>
           <Route exact path='/spots/new'>
             <CreateSpotForm />
+          </Route>
+          <Route exact path='/spots/:spotId'>
+            <SpotDetails />
           </Route>
         </Switch>
       )}
