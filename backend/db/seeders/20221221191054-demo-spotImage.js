@@ -21,49 +21,41 @@ module.exports = {
     options.tableName = 'SpotImages';
     await queryInterface.bulkInsert(options, [
       {
-        id: 1,
         spotId: 1,
         url: 'https://images.beazer.com/e616c1c0-3536-4c3c-98dd-3a1954b21a2c-c',
         preview: false
       },
       {
-        id: 2,
         spotId: 2,
         url: 'https://www.mydomaine.com/thmb/dke2LC6lH21Pvqwd2lI6AIutnDY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SuCasaDesign-Modern-9335be77ca0446c7883c5cf8d974e47c.jpg',
         preview: true
       },
       {
-        id: 3,
         spotId: 3,
         url: 'https://dlqxt4mfnxo6k.cloudfront.net/beracahhomes.com/aHR0cHM6Ly9zMy5hbWF6b25hd3MuY29tL2J1aWxkZXJjbG91ZC9jMTMyOWUzNTRlZDNjNmI1ZjZmMDI5ZmRhMjdhMjc0Yi5qcGVn/2000/2000',
         preview: true
       },
       {
-        id: 4,
         spotId: 4,
         url: 'https://architecturesstyle.com/wp-content/uploads/2020/02/modern-mansions19.jpg',
         preview: true
       },
       {
-        id: 5,
         spotId: 5,
         url: 'https://static3.mansionglobal.com/production/media/listing_images/7caacb3dc8df3d2a28daa2e98c85c518/xlarge_2fd0eca03446d30908ce117d9e5fa2.jpg',
         preview: true
       },
       {
-        id: 6,
         spotId: 6,
         url: 'https://loveincorporated.blob.core.windows.net/contentimages/gallery/69c5efd9-ca20-4db1-b974-3fde61fd9c87-massive-secrets-calabasas-mansion-ext.jpg',
         preview: true
       },
       {
-        id: 7,
         spotId: 7,
         url: 'https://static.onecms.io/wp-content/uploads/sites/34/2021/05/17/the-breakers-mansion-alt-getty-0521-2000.jpg',
         preview: true
       },
       {
-        id: 8,
         spotId: 8,
         url: 'https://robbreport.com/wp-content/uploads/2022/08/LewinLane_Mansions.jpg?w=1000',
         preview: true
