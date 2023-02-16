@@ -7,6 +7,7 @@ const CREATE_SPOT = 'spots/create';
 const SINGLE_SPOT = 'spots/singleSpot';
 const LOAD_CURRENT_SPOTS = 'spots/loadCurrentSpots';
 const UPDATE_SPOT = 'spot/update'
+const DELETE_SPOT = 'spot/delete';
 
 // ACTION CREATORS
 const actionLoadSpots = (spots) => { //* READ
@@ -41,6 +42,13 @@ const actionUpdateSpot = (spot) => {
   return {
     type: UPDATE_SPOT,
     spot
+  }
+}
+
+const actionDeleteSpot = (spotId) => {
+  return {
+    type: DELETE_SPOT,
+    spotId
   }
 }
 
@@ -116,6 +124,18 @@ export const thunkLoadCurrentSpots = () => async dispatch => {
   }
 }
 
+export const thunkDeleteSpot = (spotId) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'DELETE'
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(actionDeleteSpot(spotId));
+    return data;
+  }
+}
+
 // NORMALIZE FUNCTION
 const normalize = (spots) => {
   const normalized = {};
@@ -154,6 +174,11 @@ const spotsReducer = (state = initialState, action) => {
     case UPDATE_SPOT: {
       const newState = { ...state };
       newState.allSpots[action.spot.id] = action.spot;
+      return newState;
+    }
+    case DELETE_SPOT: {
+      const newState = { ...state };
+      delete newState.allSpots[action.spotId];
       return newState;
     }
     default:

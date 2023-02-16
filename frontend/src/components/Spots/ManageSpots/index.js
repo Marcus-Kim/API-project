@@ -43,28 +43,26 @@ function ManageSpots() {
       <div className="all-spots-wrapper">
         {spots.map(spot => {
           return (
-            <>
-              <div className='spot-card-wrapper' key={spot.id}>
-                <div className="spot-card">
-                  <NavLink className="spot-image-wrapper" to={`/spots/${spot.id}`}>
-                    <img className="spot-image" src={spot.previewImage} />
-                  </NavLink>
-                  <div className="spot-details-wrapper">
-                    <div className="city-state-rating">
-                      <span className="city-state">{spot.city}, {spot.state}</span>
-                      <span className="rating">{spot.avgRating}</span>
-                    </div>
-                    <div className="price-update-delete-wrapper">
-                      <div>${spot.price}/night</div>
-                      <div className="update-delete-wrapper">
-                        <NavLink to={`/spots/${spot.id}/edit`}><button>Update</button></NavLink>
-                        <OpenModalButton className="manage-spots-delete-button" modalComponent={DeleteSpotModal} buttonText="Delete"/>
-                      </div>
+            <div className='spot-card-wrapper' key={spot.id}>
+              <div className="spot-card">
+                <NavLink className="spot-image-wrapper" to={`/spots/${spot.id}`}>
+                  <img className="spot-image" src={spot.previewImage} />
+                </NavLink>
+                <div className="spot-details-wrapper">
+                  <div className="city-state-rating">
+                    <span className="city-state">{spot.city}, {spot.state}</span>
+                    <span className="rating">{spot.avgRating}</span>
+                  </div>
+                  <div className="price-update-delete-wrapper">
+                    <div>${spot.price}/night</div>
+                    <div className="update-delete-wrapper">
+                      <NavLink to={`/spots/${spot.id}/edit`}><button>Update</button></NavLink>
+                      <OpenModalButton className="manage-spots-delete-button" modalComponent={<DeleteSpotModal spot={spot} />} buttonText="Delete"/>
                     </div>
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           )
         })}
       </div>
