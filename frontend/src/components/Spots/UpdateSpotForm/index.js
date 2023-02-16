@@ -10,10 +10,6 @@ function UpdateSpotForm() {
 
   const spot = useSelector(state => state.spots.singleSpot) //* SPOT
 
-  useEffect(() => {
-    dispatch(thunkSingleSpot(spotId))
-
-  }, [dispatch])
 
   // const spot = useSelector(state => state.spots.allSpots[spotId])
 
@@ -26,6 +22,25 @@ function UpdateSpotForm() {
   const [description, setDescription] = useState(spot.description);
   const [title, setTitle] = useState(spot.name);
   const [price, setPrice] = useState(spot.price);
+
+  useEffect(() => {
+
+    const fillFields = async () => {
+      const spotInfo = await dispatch(thunkSingleSpot(spotId))
+      setCountry(spotInfo.country)
+      setStreetAddress(spotInfo.address)
+      setCity(spotInfo.city)
+      setState(spotInfo.state)
+      setLatitude(spotInfo.latitude)
+      setLongitude(spotInfo.longitude)
+      setDescription(spotInfo.description)
+      setTitle(spotInfo.name)
+      setPrice(spotInfo.price)
+    }
+
+    fillFields();
+    
+  }, [dispatch])
 
   if (!spot) return null;
 
