@@ -7,11 +7,13 @@ import SignupFormModal from '../SignupFormModal';
 import { login } from "../../store/session";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faBarChart } from '@fortawesome/free-regular-svg-icons'
+import { useHistory } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const history = useHistory();
 
   const openMenu = () => {
     if (showMenu) return;
@@ -40,6 +42,10 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
+  const manageSpots = () => {
+    return history.push('/spots/current')
+  }
+
   const demoLogin = () => {
     const credientials = { credential: "DemoUser1", password: "password" }
     dispatch(login(credientials))
@@ -61,6 +67,9 @@ function ProfileButton({ user }) {
             <li>{user.username}</li>
             <li>{user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
+            <li>
+              <button onClick={manageSpots}>Manage Spots</button>
+            </li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>

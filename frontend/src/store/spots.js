@@ -1,9 +1,12 @@
 // IMPORTS
+import { csrfFetch } from './csrf';
 
 // ACTIONS
 const LOAD_SPOTS = 'spots/loadSpots';
 const CREATE_SPOT = 'spots/create';
 const SINGLE_SPOT = 'spots/singleSpot';
+const LOAD_CURRENT_SPOTS = 'spots/loadCurrentSpots';
+const UPDATE_SPOT = 'spot/update'
 
 // ACTION CREATORS
 const actionLoadSpots = (spots) => { //* READ
@@ -20,9 +23,23 @@ const actionCreateSpot = (spot) => { //* CREATE
   }
 }
 
-const actionSingleSpot = (spot) => {
+const actionSingleSpot = (spot) => { //* READ ONE
   return {
     type: SINGLE_SPOT,
+    spot
+  }
+}
+
+const actionCurrentSpots = (spots) => { //* READ CURRENT USER SPOTS
+  return {
+    type: LOAD_CURRENT_SPOTS,
+    spots
+  }
+}
+
+const actionUpdateSpot = (spot) => {
+  return {
+    type: UPDATE_SPOT,
     spot
   }
 }
@@ -42,6 +59,59 @@ export const thunkSingleSpot = (spotId) => async dispatch => {
   if (response.ok) {
     const data = await response.json();
     dispatch(actionSingleSpot(data));
+
+    return data;
+  }
+}
+
+export const thunkCreateSpot = (spot, previewImageURL) => async dispatch => {
+  const response = await csrfFetch('/api/spots', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify(spot)
+  })
+
+  if (response.ok) {
+    const data = await response.json();
+    const newSpotImage = {
+      url: previewImageURL,
+      preview: true
+    }
+    const response2 = await csrfFetch(`/api/spots/${data.id}/images`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify(newSpotImage)
+    })
+    if (response2.ok) {
+      // const data2 = await response2.json();
+      // data.previewImage = data2.url
+      dispatch(actionCreateSpot(data))
+      return data;
+    }
+
+  }
+}
+
+export const thunkUpdateSpot = (updatedSpot, spotId) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify(updatedSpot)
+  })
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(actionUpdateSpot(data))
+    return data;
+  }
+}
+
+export const thunkLoadCurrentSpots = () => async dispatch => {
+  const response = await csrfFetch('/api/spots/current');
+
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(actionCurrentSpots(data))
     return data;
   }
 }
@@ -69,6 +139,21 @@ const spotsReducer = (state = initialState, action) => {
     case SINGLE_SPOT: {
       const newState = { ...state };
       newState.singleSpot = { ...action.spot };
+      return newState;
+    }
+    case CREATE_SPOT: {
+      const newState = { ...state };
+      newState.allSpots = { ...state.allSpots, [action.spot.id]: action.spot }
+      return newState;
+    }
+    case LOAD_CURRENT_SPOTS: {
+      const newState = { ...state };
+      newState.allSpots = normalize(action.spots);
+      return newState;
+    }
+    case UPDATE_SPOT: {
+      const newState = { ...state };
+      newState.allSpots[action.spot.id] = action.spot;
       return newState;
     }
     default:

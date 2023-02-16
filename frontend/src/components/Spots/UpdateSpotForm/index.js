@@ -1,32 +1,38 @@
-import './CreateSpotForm.css'
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { thunkCreateSpot } from '../../../store/spots';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { thunkSingleSpot, thunkUpdateSpot } from "../../../store/spots";
 
-function CreateSpotForm() {
-  const [country, setCountry] = useState("");
-  const [streetAddress, setStreetAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [description, setDescription] = useState("");
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [previewImageURL, setPreviewImageURL] = useState("");
-  const [imageURL2, setImageURL2] = useState("");
-  const [imageURL3, setImageURL3] = useState("");
-  const [imageURL4, setImageURL4] = useState("");
-  const [imageURL5, setImageURL5] = useState("");
-  const [errors, setErrors] = useState([]);
-
+function UpdateSpotForm() {
+  const { spotId } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory()
 
-  // Create an onSubmit function
-  const onSubmit = (e) => {
+  const spot = useSelector(state => state.spots.singleSpot) //* SPOT
+
+  useEffect(() => {
+    dispatch(thunkSingleSpot(spotId))
+
+  }, [dispatch])
+
+  // const spot = useSelector(state => state.spots.allSpots[spotId])
+
+  const [country, setCountry] = useState(spot.country); //? <-- How to get this data to persist?
+  const [streetAddress, setStreetAddress] = useState(spot.address);
+  const [city, setCity] = useState(spot.city);
+  const [state, setState] = useState(spot.state);
+  const [latitude, setLatitude] = useState(spot.lat);
+  const [longitude, setLongitude] = useState(spot.lng);
+  const [description, setDescription] = useState(spot.description);
+  const [title, setTitle] = useState(spot.name);
+  const [price, setPrice] = useState(spot.price);
+
+  if (!spot) return null;
+
+  const onSubmit = async (e) => {
     e.preventDefault();
 
-    const spot = {
+    const updatedSpot = {
       address: streetAddress,
       city,
       state,
@@ -38,16 +44,19 @@ function CreateSpotForm() {
       price
     }
 
-    dispatch(thunkCreateSpot(spot, previewImageURL))
+    const didUpdate = await dispatch(thunkUpdateSpot(updatedSpot, spotId));
+
+    if (didUpdate) {
+      return history.push(`/spots/${spot.id}`)
+    }
   }
 
-  // Create validation error handler
 
-
+  // Set the values of all the inputs to the values of the spot's details
   return (
     <div className="create-spot-form-container">
       <form className="create-spot-form-wrapper" onSubmit={onSubmit}>
-        <div className="create-spot-form-title">Create a new Spot</div>
+        <div className="create-spot-form-title">Update a Spot</div>
         <div className="create-spot-location-wrapper">
           <div className="location-fields-header">
             <div className="location-header">Where's your place located?</div>
@@ -161,27 +170,10 @@ function CreateSpotForm() {
             />
           </div>
         </div>
-        <div className="create-spot-photos-wrapper">
-          <div className="create-spot-photos-header location-header">Liven up your spot with photos</div>
-          <div className="location-description">Submit a link to at least one photo to publish your spot</div>
-          <div className="create-spot-photos-links">
-            <input
-            className="location-field-full"
-            type="text"
-            placeholder="Preview Image URL (Only this one works right now)"
-            value={previewImageURL}
-            onChange={e => setPreviewImageURL(e.target.value)}
-            />
-            <input className="location-field-full" type="text" placeholder="Image URL"/>
-            <input className="location-field-full" type="text" placeholder="Image URL"/>
-            <input className="location-field-full" type="text" placeholder="Image URL"/>
-            <input className="location-field-full" type="text" placeholder="Image URL"/>
-          </div>
-        </div>
         <button className="create-spot-submit-button">Create Spot</button>
       </form>
     </div>
   )
 }
 
-export default CreateSpotForm;
+export default UpdateSpotForm;

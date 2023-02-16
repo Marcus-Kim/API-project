@@ -1,0 +1,28 @@
+.manage-spots-title-wrapper {
+  margin-left: 57px;
+}
+
+.manage-spots-title {
+  margin-bottom: 5px;
+}
+
+.manage-spots-create-button {
+  background-color: red;
+  color: white;
+  width: 12.5%;
+}
+
+.price-update-delete-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.update-delete-wrapper {
+  display: flex;
+  column-gap: 10px;
+}
+
+.manage-spots-delete-button {
+  position: absolute;
+  height: 10px;
+}
