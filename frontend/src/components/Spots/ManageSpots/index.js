@@ -35,10 +35,10 @@ function ManageSpots() {
   */
 
   return (
-    <div className="landing-page-container">
+    <div className="landing-page-container current-user-landing-page-conatiner">
       <div className="manage-spots-title-wrapper">
         <h1 className="manage-spots-title">Manage Your Spots</h1>
-        <button className="manage-spots-create-button">Create a New Spot</button>
+        <NavLink to={'/spots/new'}><button className="manage-spots-create-button">Create a New Spot</button></NavLink>
       </div>
       <div className="all-spots-wrapper">
         {spots.map(spot => {

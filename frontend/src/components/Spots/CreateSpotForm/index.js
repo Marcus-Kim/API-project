@@ -1,7 +1,8 @@
 import './CreateSpotForm.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { thunkCreateSpot } from '../../../store/spots';
+import { useHistory } from 'react-router-dom';
 
 function CreateSpotForm() {
   const [country, setCountry] = useState("");
@@ -18,13 +19,19 @@ function CreateSpotForm() {
   const [imageURL3, setImageURL3] = useState("");
   const [imageURL4, setImageURL4] = useState("");
   const [imageURL5, setImageURL5] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [validationErrors, setvalidationErrors] = useState([]);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
+  const history = useHistory()
   const dispatch = useDispatch();
-
+  console.log(Object.values(validationErrors))
   // Create an onSubmit function
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+
+    setHasSubmitted(true)
+
+    if (validationErrors.length) return alert('Cannot Submit');
 
     const spot = {
       address: streetAddress,
@@ -38,16 +45,59 @@ function CreateSpotForm() {
       price
     }
 
-    dispatch(thunkCreateSpot(spot, previewImageURL))
+    const newSpot = await dispatch(thunkCreateSpot(spot, previewImageURL))
+
+    if (newSpot) {
+      history.push(`/spots/${newSpot.id}`)
+    }
   }
 
   // Create validation error handler
+  useEffect(() => {
+    // const errors = {
+    //   country: [],
+    //   streetAddress: [],
+    //   city: [],
+    //   state: [],
+    //   latitude: [],
+    //   longitude: [],
+    //   description: [],
+    //   title: [],
+    //   price: [],
+    //   previewImageURL: []
+    // }
 
+    const errors = [];
+
+    if (country.length < 1) errors.push("Country is required")
+    if (streetAddress.length < 1) errors.push("Address is required")
+    if (city.length < 1) errors.push("City is required")
+    if (state.length < 1) errors.push("State is required")
+    if (latitude.length < 1) errors.push("Latitude is required")
+    if (longitude.length < 1) errors.push("Longitude is required")
+    if (description.length < 30) errors.push("Description needs a minimum of 30 characters")
+    if (title.length < 1) errors.push("Title is required")
+    if (price.length < 1) errors.push("Price is required")
+    if (previewImageURL.length < 1) errors.push("Preview image is required")
+    if (!(previewImageURL.endsWith('jpg') || previewImageURL.endsWith('png') || previewImageURL.endsWith('jpeg'))) errors.push("Image URL must end in .png, .jpg, or .jpeg")
+
+    setvalidationErrors(errors)
+  }, [country, streetAddress, city, state, latitude, longitude, description, title, price, previewImageURL])
 
   return (
     <div className="create-spot-form-container">
       <form className="create-spot-form-wrapper" onSubmit={onSubmit}>
         <div className="create-spot-form-title">Create a new Spot</div>
+        {hasSubmitted && !!validationErrors.length && (
+          <div>
+            The following errors were found:
+            <ul>
+              {validationErrors.map((error) => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div className="create-spot-location-wrapper">
           <div className="location-fields-header">
             <div className="location-header">Where's your place located?</div>

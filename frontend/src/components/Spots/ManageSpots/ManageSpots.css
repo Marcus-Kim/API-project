@@ -1,5 +1,5 @@
 .manage-spots-title-wrapper {
-  margin-left: 57px;
+  margin-left: auto;
 }
 
 .manage-spots-title {
@@ -25,4 +25,14 @@
 .manage-spots-delete-button {
   position: absolute;
   height: 10px;
+}
+
+.current-user-landing-page-conatiner {
+  margin: auto;
+  position: relative;
+}
+
+.details-wrapper {
+  padding-bottom: 2%;
+  border-bottom: 2px black solid;
 }
