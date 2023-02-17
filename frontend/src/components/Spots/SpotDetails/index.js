@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
 import { thunkSingleSpot } from "../../../store/spots";
 import './SpotDetails.css'
+import SpotDetailsReviews from "../../Reviews/SpotDetailsReviews";
 
 function SpotDetails() {
   const {spotId} = useParams();
@@ -51,6 +52,9 @@ function SpotDetails() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="reviews-wrapper">
+          <SpotDetailsReviews spotId={spotId} />
         </div>
       </div>
     </>

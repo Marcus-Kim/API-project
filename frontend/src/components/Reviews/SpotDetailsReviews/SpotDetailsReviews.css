@@ -1,0 +1,36 @@
+.spot-details-reviews-container {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.spot-details-reviews-header-container {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.spot-details-reviews-rating-count {
+  margin-bottom: 1%;
+}
+
+.post-review-button-container {
+  margin-bottom: 1%;
+}
+
+.spot-details-reviews-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2%;
+}
+
+.spot-details-reviews-firstName {
+  font-size: large;
+  color: rgba(0, 0, 0, 0.74);
+  margin-bottom: 7px;
+}
+
+.spot-details-reviews-date {
+  margin-bottom: 7px;
+  color: gray;
+}

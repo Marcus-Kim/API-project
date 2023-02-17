@@ -39,3 +39,7 @@
 .price-button-wrapper {
   width: 40%;
 }
+
+.price-text {
+  margin-top: 10px;
+}

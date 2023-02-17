@@ -1,0 +1,20 @@
+
+.post-review-modal-container {
+  border: 3px solid black;
+  padding: 3%;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-review-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-review-text-area {
+  width: 100%;
+}
