@@ -7,6 +7,7 @@ import SpotDetailsReviews from "../../Reviews/SpotDetailsReviews";
 
 function SpotDetails() {
   const {spotId} = useParams();
+
   const spot = useSelector(state => state.spots.singleSpot)
 
   const dispatch = useDispatch();
@@ -44,8 +45,8 @@ function SpotDetails() {
             </div>
             <div className="price-button-wrapper">
               <div className="price-reviews-text">
-                <div className="price-text">PRICE</div>
-                <div className="reviews-text">STARS & NUMBER OF REVIEWS</div>
+                <div className="price-text"><span className="price-text-price">{`$${spot.price}`}</span>night</div>
+                <div className="reviews-text"><i className="fa-solid fa-star"></i> {spot.avgStarRating} - {spot.numReviews} reviews</div>
               </div>
               <div className="reserve-button">
                 <button className="button">RESERVE</button>

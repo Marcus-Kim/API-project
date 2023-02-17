@@ -38,8 +38,38 @@
 
 .price-button-wrapper {
   width: 40%;
+  border: 2px black solid;
+  padding: 20px;
+  margin-top: 15px;
+  border-radius: 10px;
+  max-width: 30%;
 }
 
-.price-text {
-  margin-top: 10px;
+.price-text-price {
+  font-size: larger;
+}
+
+.price-reviews-text {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reviews-text {
+  align-self: end;
+  margin-bottom: 15px;
+}
+
+.reserve-button {
+  width: 100%;
+}
+
+.button {
+  width: 100%;
+  background-color: red;
+  color: white;
+  height: 40px;
+}
+
+.price-text-price {
+  font-weight: 600;
 }
