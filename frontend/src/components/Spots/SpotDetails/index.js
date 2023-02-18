@@ -48,7 +48,7 @@ function SpotDetails() {
             <div className="price-button-wrapper">
               <div className="price-reviews-text">
                 <div className="price-text"><span className="price-text-price">{`$${spot.price.toFixed(2)}`}</span>night</div>
-                <div className="reviews-text"><i className="fa-solid fa-star"></i> {!spot.numReviews ? `New` : `${parseFloat(spot.avgStarRating).toFixed(1)} • ${spot.numReviews} reviews`}</div>
+                <div className="reviews-text"><i className="fa-solid fa-star"></i> {!spot.numReviews ? `New` : `${parseFloat(spot.avgStarRating.toFixed(1))} • ${spot.numReviews} reviews`}</div>
               </div>
               <div className="reserve-button">
                 <button className="button">RESERVE</button>
