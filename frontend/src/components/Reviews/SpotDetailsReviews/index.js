@@ -29,7 +29,7 @@ function SpotDetailsReviews({ spotId }) {
       <div className="spot-details-reviews-header-container">
         <div className="spot-details-reviews-rating-count"><i className="fa-solid fa-star"></i> {spot.avgStarRating} - {spot.numReviews} Reviews</div>
         <div className="post-review-button-container">
-          <OpenModalButton className="post-review-button" modalComponent={<PostReviewModal />} buttonText="Post Your Review" />
+          <OpenModalButton className="post-review-button" modalComponent={<PostReviewModal spotId={spot.id} />} buttonText="Post Your Review" />
         </div>
       </div>
       {reviews.length === 0 ? <div>Be the first to post a review!</div> : reviews.map(review => (
