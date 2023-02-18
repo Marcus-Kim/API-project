@@ -28,10 +28,10 @@ function LandingPage() {
                 </div>
                 <div className="spot-details-wrapper">
                   <div className="city-state-rating">
-                    <span className="city-state">{spot.city}, {spot.state}</span>
-                    <span className="rating">{spot.avgRating}</span>
+                    <span className="city-state">{spot.name}</span>
+                    <span className="rating">{spot.avgRating === 'No ratings yet' ? "No ratings yet" : spot.avgRating.toFixed(1)}</span>
                   </div>
-                  <div className="price">${spot.price}/night</div>
+                  <div className="price">${spot.price.toFixed(2)}/night</div>
                 </div>
               </div>
             </NavLink>

@@ -1,8 +1,9 @@
 import './PostReviewModal.css'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { thunkCreateSpotReview } from '../../../store/reviews';
+import { thunkCreateSpotReview, thunkLoadSpotReviews } from '../../../store/reviews';
 import { useModal } from '../../../context/Modal';
+import { thunkSingleSpot } from '../../../store/spots';
 
 function PostReviewModal({ spotId }) {
   const [rating, setRating] = useState(0);
@@ -23,7 +24,10 @@ function PostReviewModal({ spotId }) {
 
     if (spotId) {
       await dispatch(thunkCreateSpotReview(reviewPost, spotId))
-        .then(closeModal)
+      await dispatch(thunkLoadSpotReviews(spotId))
+      await dispatch(thunkSingleSpot(spotId))
+        .then(closeModal())
+
     }
 
   }
