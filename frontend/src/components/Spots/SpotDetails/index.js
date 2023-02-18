@@ -17,8 +17,10 @@ function SpotDetails() {
 
   }, [dispatch, spotId])
 
-  if (!spot) return null;
+  if (!Object.keys(spot).length) return null;
   if (!spotId) return null;
+
+  console.log(!spot)
 
   const spotImages = spot.spotImages
 
@@ -40,13 +42,13 @@ function SpotDetails() {
           </div>
           <div className="description-price-wrapper">
             <div className="description-wrapper">
-              <div className="description-title">DESCRIPTION TITLE</div>
-              <div className="description-text">DESCRIPTION TEXT</div>
+              <div className="description-title">{`Hosted by ${spot.owner.firstName} ${spot.owner.lastName}`}</div>
+              <div className="description-text">{spot.description}</div>
             </div>
             <div className="price-button-wrapper">
               <div className="price-reviews-text">
-                <div className="price-text"><span className="price-text-price">{`$${spot.price}`}</span>night</div>
-                <div className="reviews-text"><i className="fa-solid fa-star"></i> {spot.avgStarRating} - {spot.numReviews} reviews</div>
+                <div className="price-text"><span className="price-text-price">{`$${spot.price.toFixed(2)}`}</span>night</div>
+                <div className="reviews-text"><i className="fa-solid fa-star"></i> {!spot.numReviews ? `New` : `${parseFloat(spot.avgStarRating).toFixed(1)} • ${spot.numReviews} reviews`}</div>
               </div>
               <div className="reserve-button">
                 <button className="button">RESERVE</button>

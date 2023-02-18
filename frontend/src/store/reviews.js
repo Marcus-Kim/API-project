@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { thunkSingleSpot } from "./spots";
 
 // ACTIONS
 const LOAD_SPOT_REVIEWS = 'reviews/spot/load';
@@ -59,7 +60,9 @@ export const thunkCreateSpotReview = (review, spotId) => async dispatch => {
 
   if (response.ok) {
     const data = await response.json();
+    console.log(data)
     dispatch(actionCreateSpotReview(data))
+    dispatch(thunkSingleSpot(spotId))
   }
 }
 

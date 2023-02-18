@@ -24,7 +24,7 @@ function CreateSpotForm() {
 
   const history = useHistory()
   const dispatch = useDispatch();
-  console.log(Object.values(validationErrors))
+
   // Create an onSubmit function
   const onSubmit = async (e) => {
     e.preventDefault();

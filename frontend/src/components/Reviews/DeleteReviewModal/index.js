@@ -1,16 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
-import { thunkDeleteSpotReview } from "../../../store/reviews";
+import { thunkDeleteSpotReview, thunkLoadSpotReviews } from "../../../store/reviews";
+import { thunkSingleSpot } from "../../../store/spots";
 
-function DeleteReviewModal({ reviewId }) {
+function DeleteReviewModal({ reviewId, spotId }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
   if (!reviewId) return null;
-  console.log(reviewId)
+
   const handleDelete = async () => {
     await dispatch(thunkDeleteSpotReview(reviewId))
+    await dispatch(thunkLoadSpotReviews(spotId))
+    await dispatch(thunkSingleSpot(spotId))
       .then(closeModal())
   }
 
