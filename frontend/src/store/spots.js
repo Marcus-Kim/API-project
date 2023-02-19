@@ -72,7 +72,7 @@ export const thunkSingleSpot = (spotId) => async dispatch => {
   }
 }
 
-export const thunkCreateSpot = (spot, previewImageURL) => async dispatch => {
+export const thunkCreateSpot = (spot, previewImageArray) => async dispatch => {
   const response = await csrfFetch('/api/spots', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json'},
@@ -81,21 +81,35 @@ export const thunkCreateSpot = (spot, previewImageURL) => async dispatch => {
 
   if (response.ok) {
     const data = await response.json();
-    const newSpotImage = {
-      url: previewImageURL,
-      preview: true
+    // newSpotImages is going to be an array of image-urls
+    // For each url, we are going to create a variable with the data
+      // send a fetch with this data for all
+    await dispatch(actionCreateSpot(spot));
+
+    for (let previewImage of previewImageArray) {
+      await csrfFetch(`/api/spots/${data.id}/images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(previewImage)
+      })
     }
-    const response2 = await csrfFetch(`/api/spots/${data.id}/images`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify(newSpotImage)
-    })
-    if (response2.ok) {
-      // const data2 = await response2.json();
-      // data.previewImage = data2.url
-      dispatch(actionCreateSpot(data))
-      return data;
-    }
+
+    return data;
+    // const newSpotImage = {
+    //   url: previewImageURL,
+    //   preview: true
+    // }
+    // const response2 = await csrfFetch(`/api/spots/${data.id}/images`, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json'},
+    //   body: JSON.stringify(newSpotImage)
+    // })
+    // if (response2.ok) {
+    //   // const data2 = await response2.json();
+    //   // data.previewImage = data2.url
+    //   dispatch(actionCreateSpot(data))
+    //   return data;
+    // }
 
   }
 }

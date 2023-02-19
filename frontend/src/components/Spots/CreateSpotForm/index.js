@@ -45,7 +45,15 @@ function CreateSpotForm() {
       price
     }
 
-    const newSpot = await dispatch(thunkCreateSpot(spot, previewImageURL))
+    const previewImageArray = [];
+
+    if (previewImageURL) previewImageArray.push({ url: previewImageURL, preview: true});
+    if (imageURL2) previewImageArray.push({ url: imageURL2, preview: true});
+    if (imageURL3) previewImageArray.push({ url: imageURL3, preview: true});
+    if (imageURL4) previewImageArray.push({ url: imageURL4, preview: true});
+    if (imageURL5) previewImageArray.push({ url: imageURL5, preview: true});
+
+    const newSpot = await dispatch(thunkCreateSpot(spot, previewImageArray))
 
     if (newSpot) {
       history.push(`/spots/${newSpot.id}`)
@@ -210,10 +218,10 @@ function CreateSpotForm() {
             value={previewImageURL}
             onChange={e => setPreviewImageURL(e.target.value)}
             />
-            <input className="location-field-full" type="text" placeholder="Image URL"/>
-            <input className="location-field-full" type="text" placeholder="Image URL"/>
-            <input className="location-field-full" type="text" placeholder="Image URL"/>
-            <input className="location-field-full" type="text" placeholder="Image URL"/>
+            <input className="location-field-full" type="text" placeholder="Image URL" value={imageURL2} onChange={e => setImageURL2(e.target.value)}/>
+            <input className="location-field-full" type="text" placeholder="Image URL" value={imageURL3} onChange={e => setImageURL3(e.target.value)}/>
+            <input className="location-field-full" type="text" placeholder="Image URL" value={imageURL4} onChange={e => setImageURL4(e.target.value)}/>
+            <input className="location-field-full" type="text" placeholder="Image URL" value={imageURL5} onChange={e => setImageURL5(e.target.value)}/>
           </div>
         </div>
         <button className="create-spot-submit-button">Create Spot</button>
