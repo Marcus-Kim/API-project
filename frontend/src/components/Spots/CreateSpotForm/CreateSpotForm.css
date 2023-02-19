@@ -116,3 +116,8 @@ input {
   max-width: 20%;
   margin: auto;
 }
+
+.create-spot-form-validation-error {
+  list-style: none;
+  color: red;
+}
