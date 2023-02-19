@@ -1,5 +1,5 @@
 .manage-spots-title-wrapper {
-  margin-left: auto;
+  margin-left: 50px;
 }
 
 .manage-spots-title {
@@ -30,6 +30,7 @@
 .current-user-landing-page-conatiner {
   margin: auto;
   position: relative;
+  width: 70%
 }
 
 .details-wrapper {

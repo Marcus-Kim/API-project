@@ -3,16 +3,19 @@
   margin-right: 10%;
   width: fit-content;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .all-spots-wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 4%;
   row-gap: 30px;
   column-gap: 100px;
   flex-basis: 25%;
+  padding-left: 50px;
 }
 
 .spot-image {

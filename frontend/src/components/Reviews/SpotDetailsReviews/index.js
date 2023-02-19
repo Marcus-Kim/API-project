@@ -42,12 +42,12 @@ function SpotDetailsReviews({ spotId }) {
   return (
     <div className="spot-details-reviews-container">
       <div className="spot-details-reviews-header-container">
-        <div className="spot-details-reviews-rating-count"><i className="fa-solid fa-star"></i> {!spot.numReviews ? `New` : `${parseFloat(spot.avgStarRating).toFixed(1)} • ${spot.numReviews} ${(spot.numReviews === 1 ? "Review" : "Reviews")}`} </div>
+        <div className="spot-details-reviews-rating-count"><i className="fa-solid fa-star"></i> {!spot.numReviews ? `New` : `${Number(parseFloat(spot.avgStarRating)).toFixed(1)} • ${spot.numReviews} ${(spot.numReviews === 1 ? "Review" : "Reviews")}`} </div>
         <div className="post-review-button-container">
-          {session.user !== null && !userHasReview(userId) && <OpenModalButton className="post-review-button" modalComponent={<PostReviewModal spotId={spot.id} />} buttonText="Post Your Review" />}
+          {session.user !== null && !userHasReview(userId) && userId !== spot.ownerId && <OpenModalButton className="post-review-button" modalComponent={<PostReviewModal spotId={spot.id} />} buttonText="Post Your Review" />}
         </div>
       </div>
-      {reviews.length === 0 && session.user !== null ? <div>Be the first to post a review!</div> : sortedReviews.map(review => (
+      {reviews.length === 0 && session.user !== null ? (userId !== spot.ownerId && <div>Be the first to post a review!</div>) : sortedReviews.map(review => (
         <div key={review.review} className="spot-details-reviews-list-wrapper">
           <div className="spot-details-reviews-firstName">{review.User && review.User.firstName}</div>
           <div className="spot-details-reviews-date">{review.updatedAt.slice(0, 10)}</div>
