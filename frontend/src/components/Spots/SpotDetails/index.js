@@ -37,7 +37,14 @@ function SpotDetails() {
               <img id="half-image" src={spotImages && spotImages[0].url} />
             </div>
             <div className="quarter-images">
-              {/* OTHER 4 IMAGES GO HERE IN ANOTHER DIV */}
+              <div className="details-images-top-half">
+                <img className="quarter-image" src={spotImages[1] || "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6"}/>
+                <img className="quarter-image" src={spotImages[2] || "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6"}/>
+              </div>
+              <div className="details-images-bottom-half">
+                <img className="quarter-image" src={spotImages[3] || "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6"}/>
+                <img className="quarter-image" src={spotImages[4] || "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6"}/>
+              </div>
             </div>
           </div>
           <div className="description-price-wrapper">
@@ -47,8 +54,8 @@ function SpotDetails() {
             </div>
             <div className="price-button-wrapper">
               <div className="price-reviews-text">
-                <div className="price-text"><span className="price-text-price">{`$${spot.price.toFixed(2)}`}</span>night</div>
-                <div className="reviews-text"><i className="fa-solid fa-star"></i> {!spot.numReviews ? `New` : `${parseFloat(spot.avgStarRating.toFixed(1))} • ${spot.numReviews} ${(spot.numReviews === 1 ? "Review" : "Reviews")}`}</div>
+                <div className="price-text"><span className="price-text-price">{`$${Number(parseFloat(spot.price)).toFixed(2)}`}</span>night</div>
+                <div className="reviews-text"><i className="fa-solid fa-star"></i> {!spot.numReviews ? `New` : `${Number(parseFloat(spot.avgStarRating)).toFixed(1)} • ${spot.numReviews} ${(spot.numReviews === 1 ? "Review" : "Reviews")}`}</div>
               </div>
               <div className="reserve-button">
                 <button className="button">RESERVE</button>

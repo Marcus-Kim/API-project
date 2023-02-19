@@ -23,19 +23,22 @@ function UpdateSpotForm() {
   const [validationErrors, setvalidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
+  console.log(price.length)
+
   useEffect(() => {
 
     const errors = [];
 
-    if (country && country.length < 1) errors.push("Country is required")
-    if (streetAddress && streetAddress.length < 1) errors.push("Address is required")
-    if (city && city.length < 1) errors.push("City is required")
-    if (state && state.length < 1) errors.push("State is required")
-    if (latitude && latitude.length < 1) errors.push("Latitude is required")
-    if (longitude && longitude.length < 1) errors.push("Longitude is required")
-    if (description && description.length < 30) errors.push("Description needs a minimum of 30 characters")
-    if (title && title.length < 1) errors.push("Title is required")
-    if (price && price.length < 1) errors.push("Price is required")
+    if (country.length < 1) errors.push("Country is required")
+    if (streetAddress.length < 1) errors.push("Address is required")
+    if (city.length < 1) errors.push("City is required")
+    if (state.length < 1) errors.push("State is required")
+    if (latitude.length < 1) errors.push("Latitude is required")
+    if (longitude.length < 1) errors.push("Longitude is required")
+    if (description.length < 30) errors.push("Description needs a minimum of 30 characters")
+    if (title.length < 1) errors.push("Title is required")
+    if (!price) errors.push("Price is required")
+    if (price <= 0) errors.push("Invalid Price")
 
 
     setvalidationErrors(errors)
@@ -66,6 +69,10 @@ function UpdateSpotForm() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    setHasSubmitted(true);
+    //! Ends here if errors
+    if (validationErrors.length) return alert('Cannot Submit');
 
     const updatedSpot = {
       address: streetAddress,
