@@ -54,18 +54,6 @@ function CreateSpotForm() {
 
   // Create validation error handler
   useEffect(() => {
-    // const errors = {
-    //   country: [],
-    //   streetAddress: [],
-    //   city: [],
-    //   state: [],
-    //   latitude: [],
-    //   longitude: [],
-    //   description: [],
-    //   title: [],
-    //   price: [],
-    //   previewImageURL: []
-    // }
 
     const errors = [];
 

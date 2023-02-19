@@ -54,7 +54,7 @@ function ManageSpots() {
                     <span className="rating">{spot.avgRating}</span>
                   </div>
                   <div className="price-update-delete-wrapper">
-                    <div>${spot.price}/night</div>
+                    <div>${spot.price.toFixed(2)}/night</div>
                     <div className="update-delete-wrapper">
                       <NavLink to={`/spots/${spot.id}/edit`}><button>Update</button></NavLink>
                       <OpenModalButton className="manage-spots-delete-button" modalComponent={<DeleteSpotModal spot={spot} />} buttonText="Delete"/>

@@ -11,36 +11,56 @@ function UpdateSpotForm() {
   const spot = useSelector(state => state.spots.singleSpot) //* SPOT
 
 
-  // const spot = useSelector(state => state.spots.allSpots[spotId])
-
   const [country, setCountry] = useState(spot.country); //? <-- How to get this data to persist?
   const [streetAddress, setStreetAddress] = useState(spot.address);
   const [city, setCity] = useState(spot.city);
   const [state, setState] = useState(spot.state);
-  const [latitude, setLatitude] = useState(spot.lat);
-  const [longitude, setLongitude] = useState(spot.lng);
+  const [latitude, setLatitude] = useState(spot.lat || 0);
+  const [longitude, setLongitude] = useState(spot.lng || 0);
   const [description, setDescription] = useState(spot.description);
   const [title, setTitle] = useState(spot.name);
   const [price, setPrice] = useState(spot.price);
+  const [validationErrors, setvalidationErrors] = useState([]);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  useEffect(() => {
+
+    const errors = [];
+
+    if (country && country.length < 1) errors.push("Country is required")
+    if (streetAddress && streetAddress.length < 1) errors.push("Address is required")
+    if (city && city.length < 1) errors.push("City is required")
+    if (state && state.length < 1) errors.push("State is required")
+    if (latitude && latitude.length < 1) errors.push("Latitude is required")
+    if (longitude && longitude.length < 1) errors.push("Longitude is required")
+    if (description && description.length < 30) errors.push("Description needs a minimum of 30 characters")
+    if (title && title.length < 1) errors.push("Title is required")
+    if (price && price.length < 1) errors.push("Price is required")
+
+
+    setvalidationErrors(errors)
+  }, [country, streetAddress, city, state, latitude, longitude, description, title, price])
 
   useEffect(() => {
 
     const fillFields = async () => {
       const spotInfo = await dispatch(thunkSingleSpot(spotId))
+
+      console.log(spotInfo)
       setCountry(spotInfo.country)
       setStreetAddress(spotInfo.address)
       setCity(spotInfo.city)
       setState(spotInfo.state)
-      setLatitude(spotInfo.latitude)
-      setLongitude(spotInfo.longitude)
+      setLatitude(spotInfo.lat)
+      setLongitude(spotInfo.lng)
       setDescription(spotInfo.description)
       setTitle(spotInfo.name)
       setPrice(spotInfo.price)
     }
 
     fillFields();
-    
-  }, [dispatch])
+
+  }, [dispatch, spotId])
 
   if (!spot) return null;
 
@@ -52,8 +72,8 @@ function UpdateSpotForm() {
       city,
       state,
       country,
-      lat: latitude,
-      lng: longitude,
+      lat: latitude.toFixed(2),
+      lng: longitude.toFixed(2),
       name: title,
       description,
       price
@@ -72,6 +92,16 @@ function UpdateSpotForm() {
     <div className="create-spot-form-container">
       <form className="create-spot-form-wrapper" onSubmit={onSubmit}>
         <div className="create-spot-form-title">Update a Spot</div>
+        {hasSubmitted && !!validationErrors.length && (
+          <div>
+            The following errors were found:
+            <ul>
+              {validationErrors.map((error) => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div className="create-spot-location-wrapper">
           <div className="location-fields-header">
             <div className="location-header">Where's your place located?</div>
@@ -185,7 +215,7 @@ function UpdateSpotForm() {
             />
           </div>
         </div>
-        <button className="create-spot-submit-button">Create Spot</button>
+        <button className="create-spot-submit-button">Update Spot</button>
       </form>
     </div>
   )

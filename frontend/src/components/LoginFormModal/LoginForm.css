@@ -4,8 +4,108 @@ input {
   padding: 10px;
 }
 
-.form-elements-wrapper {
+/* .form-elements-wrapper {
   display: flex;
   flex-direction: column;
   width: 100%
+} */
+
+/* .login-form-modal-container {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+}
+
+.login-form-modal-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-form-input {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  justify-content: center;
+}
+
+.login-modal-demo-login {
+  list-style-type: none;
+  margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+.login-modal-login-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+
+}
+
+.login-modal-login-button {
+  width: 90%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 10px;
+} */
+
+/* .login-form-modal-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
+
+.login-form-modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  margin: auto;
+}
+
+.login-form-modal-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+}
+
+.login-modal-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 0px;
+  position: relative;
+}
+
+.login-modal-title {
+  margin-bottom: 0px;
+}
+
+.login-modal-login-button {
+  width: 106%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+
+.login-modal-demo-login {
+  margin-bottom: 25px;
+}
+
+.login-form-modal-errors {
+  list-style: none;
+  list-style-type: none;
+  margin-left: -40px;
+  color: red;
 }

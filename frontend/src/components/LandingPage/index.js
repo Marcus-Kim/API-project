@@ -29,9 +29,9 @@ function LandingPage() {
                 <div className="spot-details-wrapper">
                   <div className="city-state-rating">
                     <span className="city-state">{spot.name}</span>
-                    <span className="rating"><i className="fa-solid fa-star"></i> {spot.avgRating === 'No ratings yet' ? "New" : spot.avgRating.toFixed(1)}</span>
+                    <span className="rating"><i className="fa-solid fa-star"></i> {spot.avgRating === 'No ratings yet' ? "New" : parseFloat(spot.avgRating).toFixed(1)}</span>
                   </div>
-                  <div className="price">${spot.price.toFixed(2)}night</div>
+                  <div className="price">${Number.parseFloat(spot.price.toFixed(2))}night</div>
                 </div>
               </div>
             </NavLink>
