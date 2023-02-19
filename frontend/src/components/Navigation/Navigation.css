@@ -39,7 +39,13 @@
   list-style: none;
   position: absolute;
   top: 65px;
-  right: 50px
+  right: 50px;
+  z-index: 9999;
+  background-color: gray;
+  border: 1px black solid;
+  list-style-type: none;
+  margin: auto;
+  padding: 10px;
 }
 
 .create-spot-button {

@@ -4,9 +4,8 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-import { login } from "../../store/session";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faBarChart } from '@fortawesome/free-regular-svg-icons'
+import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { useHistory } from "react-router-dom";
 
 function ProfileButton({ user }) {
@@ -39,16 +38,12 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    history.push('/')
     closeMenu();
   };
 
   const manageSpots = () => {
     return history.push('/spots/current')
-  }
-
-  const demoLogin = () => {
-    const credientials = { credential: "DemoUser1", password: "password" }
-    dispatch(login(credientials))
   }
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -64,8 +59,7 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
+            <li>Hello, {user.firstName}</li>
             <li>{user.email}</li>
             <li>
               <button onClick={manageSpots}>Manage Spots</button>
@@ -85,10 +79,6 @@ function ProfileButton({ user }) {
               itemText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
-            />
-            <OpenModalMenuItem
-              itemText="Demo User"
-              onItemClick={demoLogin}
             />
           </>
         )}
