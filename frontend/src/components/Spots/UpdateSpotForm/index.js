@@ -79,8 +79,8 @@ function UpdateSpotForm() {
       city,
       state,
       country,
-      lat: latitude.toFixed(2),
-      lng: longitude.toFixed(2),
+      lat: Number(parseFloat(latitude)).toFixed(2),
+      lng: Number(parseFloat(longitude)).toFixed(2),
       name: title,
       description,
       price
