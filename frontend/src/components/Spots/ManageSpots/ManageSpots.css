@@ -37,3 +37,9 @@
   padding-bottom: 2%;
   border-bottom: 2px black solid;
 }
+.city-state-links,
+.price-value {
+  width: 145px;
+  text-decoration: none;
+  color: black;
+}
