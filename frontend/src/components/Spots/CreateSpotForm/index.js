@@ -81,7 +81,7 @@ function CreateSpotForm() {
             The following errors were found:
             <ul>
               {validationErrors.map((error) => (
-                <li key={error}>{error}</li>
+                <li className='create-spot-form-validation-error' key={error}>-{error}</li>
               ))}
             </ul>
           </div>
