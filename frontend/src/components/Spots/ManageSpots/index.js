@@ -1,15 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkLoadCurrentSpots } from "../../../store/spots";
-import { NavLink, Route, Switch, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './ManageSpots.css'
-import UpdateSpotForm from "../UpdateSpotForm";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteSpotModal from "../DeleteSpotModal";
 
 function ManageSpots() {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const spots = useSelector(state => Object.values(state.spots.allSpots));
 
@@ -18,14 +16,6 @@ function ManageSpots() {
   }, [dispatch])
 
   if (!spots) return null;
-
-  const updateSpotRedirect = () => {
-    return history.push('') //TODO Create update spot page
-  }
-
-  const deleteSpotRedirect = () => {
-    return history.push('') //TODO Create delete spot modal
-  }
 
   /*
   TODO - Style Update & Delete buttons to red
@@ -49,12 +39,15 @@ function ManageSpots() {
                   <img className="spot-image" src={spot.previewImage} />
                 </NavLink>
                 <div className="spot-details-wrapper">
-                  <div className="city-state-rating">
-                    <span className="city-state">{spot.city}, {spot.state}</span>
-                    <span className="rating">{spot.avgRating}</span>
-                  </div>
+                  <NavLink className={"city-state-links"} to={`/spots/${spot.id}`}>
+
+                    <div className="city-state-rating">
+                      <span className="city-state">{spot.city}, {spot.state}</span>
+                      <span className="rating">{spot.avgRating}</span>
+                    </div>
+                  </NavLink>
                   <div className="price-update-delete-wrapper">
-                    <div>${Number(parseFloat(spot.price)).toFixed(2)}/night</div>
+                    <NavLink className={'price-value'} to={`/spots/${spot.id}`}><div>${Number(parseFloat(spot.price)).toFixed(2)}/night</div></NavLink>
                     <div className="update-delete-wrapper">
                       <NavLink to={`/spots/${spot.id}/edit`}><button>Update</button></NavLink>
                       <OpenModalButton className="manage-spots-delete-button" modalComponent={<DeleteSpotModal spot={spot} />} buttonText="Delete"/>

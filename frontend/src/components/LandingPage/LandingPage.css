@@ -12,7 +12,7 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   margin-top: 4%;
-  row-gap: 30px;
+  row-gap: 100px;
   column-gap: 100px;
   flex-basis: 25%;
   padding-left: 50px;
@@ -25,15 +25,12 @@
 
 .spot-card-wrapper {
   text-decoration: none;
-  color: black
+  color: black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .city-state-rating {
   display: flex;
   justify-content: space-between;
-}
-
-.spot-card {
-  border: 1px black solid;
-  padding: 1px;
+  padding-bottom: 10px;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
@@ -14,7 +14,7 @@ function Navigation({ isLoaded }){
       </div>
       <div className='profile-button'>
         {sessionUser !== null && <div className='create-spot-button'>
-          <NavLink to='/spots/new'>Create a Spot</NavLink>
+          <NavLink to='/spots/new'>Create a New Spot</NavLink>
           </div>}
         {isLoaded && <ProfileButton user={sessionUser} />}
       </div>
