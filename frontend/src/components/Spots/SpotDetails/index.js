@@ -22,7 +22,6 @@ function SpotDetails() {
 
 
   const spotImages = spot.spotImages
-  console.log(spotImages)
 
   return (
     <>
@@ -39,10 +38,10 @@ function SpotDetails() {
             <div className="quarter-images">
               <div className="details-images-top-half">
                 <img className="quarter-image" alt="placeholder image" src={spotImages[1] && spotImages[1].url || "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6"}/>
-                <img id="bottom-left" className="quarter-image" src={spotImages[2] && spotImages[2].url || "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6"}/>
+                <img id="top-right" className="quarter-image" src={spotImages[2] && spotImages[2].url || "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6"}/>
               </div>
               <div className="details-images-bottom-half">
-                <img id="top-right" className="quarter-image" src={spotImages[3] && spotImages[3].url || "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6"}/>
+                <img className="quarter-image" src={spotImages[3] && spotImages[3].url || "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6"}/>
                 <img id="bottom-right" className="quarter-image" src={spotImages[4] && spotImages[4].url || "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6"}/>
               </div>
             </div>

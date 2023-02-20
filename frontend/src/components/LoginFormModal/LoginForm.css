@@ -69,6 +69,7 @@ input {
   justify-content: center;
   width: 500px;
   margin: auto;
+  border: black solid 3px;
 }
 
 .login-form-modal-form {
