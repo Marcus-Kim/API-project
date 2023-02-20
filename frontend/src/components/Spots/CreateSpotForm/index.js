@@ -214,7 +214,7 @@ function CreateSpotForm() {
             <input
             className="location-field-full"
             type="text"
-            placeholder="Preview Image URL (Only this one works right now)"
+            placeholder="Preview Image URL (required)"
             value={previewImageURL}
             onChange={e => setPreviewImageURL(e.target.value)}
             />

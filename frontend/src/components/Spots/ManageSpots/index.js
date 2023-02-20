@@ -24,8 +24,14 @@ function ManageSpots() {
   TODO - Make the Spot Name and Price NavLink to the Spot Detail
   */
 
+  const nameTrunkate = (title) => {
+    if (title.length > 20) {
+      return `${title.slice(0, 20)}...`;
+    }
+  }
+
   return (
-    <div className="landing-page-container current-user-landing-page-conatiner">
+    <div className="current-user-landing-page-container">
       <div className="manage-spots-title-wrapper">
         <h1 className="manage-spots-title">Manage Your Spots</h1>
         <NavLink to={'/spots/new'}><button className="manage-spots-create-button">Create a New Spot</button></NavLink>
@@ -42,14 +48,14 @@ function ManageSpots() {
                   <NavLink className={"city-state-links"} to={`/spots/${spot.id}`}>
 
                     <div className="city-state-rating">
-                      <span className="city-state">{spot.city}, {spot.state}</span>
-                      <span className="rating">{spot.avgRating}</span>
+                      <span className="city-state">{spot.name}</span>
+                      <span className="rating"><i className="fa-solid fa-star"></i> {spot.avgRating === 'No ratings yet' ? "New" : Number(parseFloat(spot.avgRating)).toFixed(1)}</span>
                     </div>
                   </NavLink>
                   <div className="price-update-delete-wrapper">
                     <NavLink className={'price-value'} to={`/spots/${spot.id}`}><div>${Number(parseFloat(spot.price)).toFixed(2)}/night</div></NavLink>
                     <div className="update-delete-wrapper">
-                      <NavLink to={`/spots/${spot.id}/edit`}><button>Update</button></NavLink>
+                      <NavLink to={`/spots/${spot.id}/edit`}><button className="manage-spot-update-button">Update</button></NavLink>
                       <OpenModalButton className="manage-spots-delete-button" modalComponent={<DeleteSpotModal spot={spot} />} buttonText="Delete"/>
                     </div>
                   </div>

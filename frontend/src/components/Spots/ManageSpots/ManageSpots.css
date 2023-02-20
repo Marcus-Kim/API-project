@@ -1,5 +1,11 @@
+.current-user-landing-page-container {
+  max-width: 1580px;
+  margin: auto;
+}
+
 .manage-spots-title-wrapper {
-  margin-left: 50px;
+  width: 100%;
+  margin-left: 100px;
 }
 
 .manage-spots-title {
@@ -27,19 +33,25 @@
   height: 10px;
 }
 
-.current-user-landing-page-conatiner {
-  margin: auto;
-  position: relative;
-  width: 70%
-}
-
 .details-wrapper {
   padding-bottom: 2%;
   border-bottom: 2px black solid;
 }
+
 .city-state-links,
 .price-value {
   width: 145px;
   text-decoration: none;
   color: black;
+}
+
+.city-state {
+  max-width: 75%;
+  text-overflow: ellipsis;
+  overflow: hidden
+}
+
+.manage-spot-update-button {
+  color: white;
+  background-color: red;
 }

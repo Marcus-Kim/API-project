@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
@@ -72,7 +72,7 @@ function SignupFormModal() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              placeholder="Username"
+              placeholder="Username (4 characters minimum)"
             />
 
           <div className="signup-modal-input-wrapper">
@@ -81,7 +81,7 @@ function SignupFormModal() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder="Password"
+              placeholder="Password (at least 6 characters)"
             />
           </div>
 
@@ -91,7 +91,7 @@ function SignupFormModal() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              placeholder="Confirm Password"
+              placeholder="Confirm Password (must match password)"
             />
           </div>
 
