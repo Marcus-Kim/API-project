@@ -2,6 +2,8 @@
 ---
 BookMe is a full-stack web application that is designed to help users find a place to stay; whether it be for vacation, work, or any type of travel! This is my first full-stack project which showcases all of the programming skills I've developed so far.
 
+[Check out the live site!](https://bookme-9onn.onrender.com)
+
 ## Technologies Used:
 
 - React
